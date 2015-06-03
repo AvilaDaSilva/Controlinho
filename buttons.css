@@ -1,0 +1,129 @@
+html(
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Teste CSS</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="buttons.css" />
+    </head>
+    <body>
+            <form action="#" method="post">
+                <button type="submit" class="btn btn-acept btn-lg">Enviar</button>
+                <a href="#" class="btn btn-acept btn-lg"><span> Aadsda</span></a>
+                <button class="btn btn-normal btn-md">Teste</button>
+                <button class="btn btn-cancel btn-md">Teste</button>
+                <button class="btn btn-white btn-nm">Teste</button>
+                <button class="btn btn-black btn-sm">Teste</button>
+                <button class="btn btn-blue btn-lx">Teste</button>
+            </form>
+    </body>
+</html>
+)
+
+css(
+body {
+    background-color: black;
+}
+
+/*--CLASSES DE BTN-MAIN--*/
+.btn {
+    box-sizing: border-box;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    border: 0px;
+}
+a.btn{
+    padding-top:3px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+/*--CLASSES DE BTN-TYPE--*/
+.btn-acept {
+    color:black;
+    background: limegreen;
+    border:1px solid;
+    border-color: darkgreen;
+}
+.btn-normal {
+    color:black;
+    background: green;
+    border:1px solid;
+    border-color: darkgreen;
+}
+.btn-cancel {
+    color:black;
+    background: red;
+    border:1px solid;
+    border-color: darkred;
+}
+.btn-white {
+    color:black;
+    background: white;
+    border:1px solid;
+    border-color: darkgreen;
+}
+.btn-black {
+    color:white;
+    background: black;
+    border:1px solid;
+    border-color: white;
+}
+.btn-blue {
+    color:black;
+    background: blue;
+    border:1px solid;
+    border-color: darkgreen;
+}
+/*--CLASSES BTN-TYPE-HOVER--*/
+.btn-acept:hover{
+    background: lightgreen;
+}
+.btn-normal:hover{
+    background: limegreen;
+}
+.btn-cancel:hover{
+    background: lightsalmon;
+}
+.btn-white:hover{
+    background: lightyellow;
+}
+.btn-black:hover{
+    background: darkgray;
+}
+.btn-blue:hover{
+    background:royalblue;
+}
+
+/*--CLASSES DE BTN-SIZE--*/
+.btn-lg{
+    font-size:20px;
+    text-align:center;  
+    width:130px;
+    height:35px;
+}
+.btn-md{
+    font-size:15px;
+    text-align:center;
+    width:100px;
+    height:28px;
+}
+.btn-nm{
+    font-size:11px;
+    text-align:center;
+    width:80px;
+    height:19px;
+}
+.btn-sm{
+    font-size:8px;
+    text-align:center;
+    width:70px;
+    height:15px;
+}
+.btn-lx{
+    font-size:5px;
+    text-align:center;
+    width:60px;
+    height:10px;
+}
+)
