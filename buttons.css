@@ -30,7 +30,11 @@ body {
     box-sizing: border-box;
     font-family: Helvetica, Arial, sans-serif;
     font-size: 14px;
-    border: 0px;
+    border-radius: 15px;
+    box-shadow: 1px 1px 2px #333333;
+    -moz-box-shadow: 1px 1px 2px #333333;
+    -webkit-box-shadow: 1px 1px 2px #333333;
+    
 }
 a.btn{
     padding-top:3px;
@@ -75,24 +79,43 @@ a.btn{
     border:1px solid;
     border-color: darkgreen;
 }
+
 /*--CLASSES BTN-TYPE-HOVER--*/
 .btn-acept:hover{
     background: lightgreen;
+    box-shadow: -1px -1px 2px #333333;
+    -moz-box-shadow: -1px -1px 2px #333333;
+    -webkit-box-shadow: -1px -1px 2px #333333;
 }
 .btn-normal:hover{
     background: limegreen;
+    box-shadow: -1px -1px 2px #333333;
+    -moz-box-shadow: -1px -1px 2px #333333;
+    -webkit-box-shadow: -1px -1px 2px #333333;
 }
 .btn-cancel:hover{
     background: lightsalmon;
+    box-shadow: -1px -1px 2px #333333;
+    -moz-box-shadow: -1px -1px 2px #333333;
+    -webkit-box-shadow: -1px -1px 2px #333333;
 }
 .btn-white:hover{
     background: lightyellow;
+    box-shadow: -1px -1px 2px #333333;
+    -moz-box-shadow: -1px -1px 2px #333333;
+    -webkit-box-shadow: -1px -1px 2px #333333;
 }
 .btn-black:hover{
     background: darkgray;
+    box-shadow: -1px -1px 2px #333333;
+    -moz-box-shadow: -1px -1px 2px #333333;
+    -webkit-box-shadow: -1px -1px 2px #333333;
 }
 .btn-blue:hover{
     background:royalblue;
+    box-shadow: -1px -1px 2px #333333;
+    -moz-box-shadow: -1px -1px 2px #333333;
+    -webkit-box-shadow: -1px -1px 2px #333333;
 }
 
 /*--CLASSES DE BTN-SIZE--*/
