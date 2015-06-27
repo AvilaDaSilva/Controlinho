@@ -8,6 +8,7 @@
     <meta name="author" content="">
 
     <link href="../assets/css/bootstrap.css" rel="stylesheet">
+    <link href="../assets/css/modal.css" rel="stylesheet">
 
     <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -19,6 +20,25 @@
   </head>
 
   <body>
+<!-- MODAL DE LOGIN -->
+<div id="modal-login" class="modal hidden">
+        <div class="modal-header">
+            <span>Login: </span>
+            <a href="" class="close" >X</a>
+        </div>
+        <div class="modal-body">
+            <form action="/usuarios/login" method="POST">
+                <label class="modal-label">E-mail: </label>
+                <input type="text" name="email-login" placeholder="Digite seu E-mail aqui!" />
+                <label class="modal-label">Senha: </label>
+                <input type="password" name="senha-login" />
+                <a href="/usuarios/retrieve">Esqueceu a senha?</a><br>
+                <a href="/usuarios/save">Quer fazer um novo cadastro?</a><br><br>
+                <button class="btn-success" type="submit">Entrar</button>
+                
+            </form>
+        </div>
+</div>
 <!-- MENU SUPERIOR -->
     <div class="navbar">
     	<img src="/images/cabecalho.png">
@@ -27,72 +47,42 @@
             <a class="btn-first"><img src="/images/buttons/botao_home.png"></a>
             <a class="btn-normal"><img src="/images/buttons/botao_about.png"></a>
             <a class="btn-normal"><img src="/images/buttons/botao_arcade.png"></a>
-            <a class="btn-login"><img src="/images/buttons/botao_login.png"></a>
+            <a class="btn-login" href="#modal-login"><img src="/images/buttons/botao_login.png"></a>
        		 </div>
       	</div>
     </div>
-<!-- SIDEBAR -->
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <img src="/images/avatar.jpg">
-            <br>
-            <h4>ANONIMOUS</h4>
-          </div>
-        </div>
-        <div class="span9">
-          <div class="hero-unit">
-            <h1>Hello, world!</h1>
-            <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-            <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-          </div>
-          <div class="hero-unit">
-            <h1>FILIPI SMITH</h1>
-            <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-            <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-          </div>
-          <div class="hero-unit">
-            <h1>FILIPI SMITH</h1>
-            <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-            <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-          </div>
-          
-      </div>
-      <div class="pagination pagination-centered">
-  <ul>
-    <li><a href="#">Prev</a></li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li><a href="#">Next</a></li>
-  </ul>
+<!-- MENSAGENS DE ERRO -->
+<div id="error-nome" class="alert alert-error none">
+    <a href="" class="close pull-right" >x</a>
+    <h4>O campo nome não está correto, verifique!</h4>
 </div>
-
-      <footer class="lala">
+<div id="error-email" class="alert alert-error none">
+    <a href="" class="close pull-right" >x</a>
+    <h4>O campo e-mail não está correto, verifique!</h4>
+</div>
+        <div class="container">
+            <div class="form-signin">
+            <form action="" method="POST">
+                  <h3> Novo Usuário:</h3>
+                  <label>Nome: </label>
+                  <input type="text" name="nome" placeholder="Digite seu nome aqui!" />
+                  <label>E-mail: </label>
+                  <input type="email" name="email" placeholder="exemplo@controlinho.com" />
+                  <label>Senha: </label>
+                  <input type="password" name="senha" /><br>
+                  <input type="submit" name="salvar" value="Enviar" class="btn-success btn-large" />
+              </form>
+            </div>
+    </div>
+ <footer class="lala">
         <div class="center">
           <p>Um oferecimento de Controlinho</p>
           <p>&copy; 2015 - Felippe, Gabriel e Iuri</p>
         </div>
       </footer>
 
-    </div>
-
-    <script src="../assets/js/jquery.js"></script>
-    <script src="../assets/js/bootstrap-transition.js"></script>
-    <script src="../assets/js/bootstrap-alert.js"></script>
-    <script src="../assets/js/bootstrap-modal.js"></script>
-    <script src="../assets/js/bootstrap-dropdown.js"></script>
-    <script src="../assets/js/bootstrap-scrollspy.js"></script>
-    <script src="../assets/js/bootstrap-tab.js"></script>
-    <script src="../assets/js/bootstrap-tooltip.js"></script>
-    <script src="../assets/js/bootstrap-popover.js"></script>
-    <script src="../assets/js/bootstrap-button.js"></script>
-    <script src="../assets/js/bootstrap-collapse.js"></script>
-    <script src="../assets/js/bootstrap-carousel.js"></script>
-    <script src="../assets/js/bootstrap-typeahead.js"></script>
+    <script src="../assets/js/bootstrap.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
 
   </body>
 </html>

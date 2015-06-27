@@ -6,24 +6,52 @@ ini_set('display_startup_erros',1);
 include 'bootstrap.php';  
 
 use Controller\Usuarios as Usuarios;
+use Controller\Posts as Posts;
 
 $usuarios = new Usuarios;
+$posts = new Posts;
+
 $uri = $_SERVER['REQUEST_URI'];
-if($uri == '/usuarios' || $uri == '/usuarios/retrieve'){
-	$usuarios->retrieveAction();
-}else if($uri == '/usuarios/save'){
-	$id = null;
-	if( isset($_GET['id']) )
-		$id = $_GET['id'];
-	$usuarios->saveAction($id);
-}else if($uri == '/usuarios/delete'){
-	if( isset($_GET['id']) || (int) $_GET['id'] > 0 ){
-		$usuarios->delete($_GET['id']);
-	}else{
-		require 'view/errors/error.php';
-	}	
-}else{
-	header('Status: 404 Not Found');
-	echo "<html><body><h1>Page Not Found</h1></body></html>";
+
+/* USUARIOS */
+if($uri == '/usuarios/retrieve')
+{
+    $usuarios->retrieveAction();
+}
+else if($uri == '/usuarios/save')
+{
+    $usuarios->saveAction();
+}
+else if($uri == '/usuarios/delete')
+{
+    $usuarios->deleteAction();
+}
+else if($uri == '/usuarios')
+{
+    $usuarios->homeAction();
+}
+
+
+/* POSTS */
+else if($uri == '/posts/retrieve')
+{
+    $posts->retrieveAction();
+}
+else if($uri == '/posts/save')
+{
+    
+}
+else if($uri == '/posts/delete')
+{
+    
+}
+else if($uri == '/home')
+{
+    $posts->homeAction();
+}
+else
+{
+    header('Status: 404 Not Found');
+    echo "<html><body><h1>Page Not Found</h1></body></html>";
 }
 

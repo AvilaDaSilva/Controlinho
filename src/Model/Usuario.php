@@ -52,30 +52,18 @@ class Usuario
 	*/
 	protected $avatar;
 
-	public function __set($key, $value)
-	{
-		$this->$key = trim(strip_tags($value));
-	}
-
-    public function __get($key)
-    {
-		return $this->$key;
+    public function __set($atrib, $value){
+        $this->$atrib = $value;
     }
 
-	public function setData($values)
-	{
-
-		foreach($values as $key => $value){
-			$this->$key = trim(strip_tags($value));
-		}
-
-	}
-
-	public function getArrayCopy()
-	{
-		return get_object_vars($this);
-	}
-
+    public function __get($atrib){
+        return $this->$atrib;
+    }
+    
+    public function getArrayCopy()
+    {
+            return get_object_vars($this);
+    }
 }
 
 

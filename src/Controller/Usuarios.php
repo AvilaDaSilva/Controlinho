@@ -9,34 +9,45 @@ class Usuarios
 
 	public function retrieveAction()
 	{
-		$adapter = new DbAdapter();
-		$usuarios = $adapter->fetchAll('usuarios');		
-		require '../view/usuarios/retrieve.php';
 	}
 
-	public function saveAction($id)
-	{
-		if($_SERVER['REQUEST_METHOD'] == 'POST'){
-			$usuario = new Usuario();			
-			$usuario->nome = $_POST['nome'];
-			$usuario->senha = md5($_POST['senha']);
-			$usuario->email = $_POST['email'];
-			$usuario->perfil = $_POST['perfil'];
-			$usuario->data_nasc = $_POST['data_nasc'];
-			$adapter = new DbAdapter();
-			$return = $adapter->insert($usuario); 	
-
-			if(!$return)
-				die('Um erro ocorreu');		
-
-			header('Location: /usuarios');
-		}
-
-		require '../view/usuarios/save.phtml';
+	public function saveAction()
+	{  
+            if($_POST)
+            {
+                $post = $_POST;
+                $adapter = new DbAdapter;
+                $usuario = new Usuario;
+                
+                if(preg_match('/[a-zA-ZÀ-ú]$/', $post['nome']) == 0){
+                    return header('Location: http://localhost:8080/usuarios/save#error-nome');
+                }
+                elseif(!filter_var($post['email'], FILTER_VALIDATE_EMAIL)){
+                    return header('Location: http://localhost:8080/usuarios/save#error-email');
+                }
+                
+                set $usuario->nome = $post['nome'];
+                set $usuario->nome = $post['email'];
+                set $usuario->nome = $post['senha'];
+                
+                $adapter->insert($usuario);
+            }
+            else
+            {    
+            require '../view/usuarios/save.phtml';
+            }
 	}
 	
-	public function deleteAction($id)
+	public function deleteAction()
 	{
 	}
+        
+        public function homeAction()
+        {
+                $adapter = new DbAdapter();
+		$usuarios = $adapter->fetchAll('usuarios');		
+		require '../view/usuarios/retrieve.php';
+            require '../view/usuarios/home.phtml';
+        }
 	
 }
