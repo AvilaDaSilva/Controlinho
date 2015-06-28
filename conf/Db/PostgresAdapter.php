@@ -81,9 +81,21 @@ class PostgresAdapter implements AdapterInterface
 	public function delete($table, $id)
 	{
         $stmp = $this->db_adapter->prepare("DELETE FROM $table WHERE id = $id");
+        var_dump($stmp);exit;
         $stmp->execute();
         return true;
 	}
+
+    public function deletePost($id)
+    {
+        $stmp = $this->db_adapter->prepare("DELETE FROM anexos WHERE post = $id");
+        $stmp->execute();
+        $stmp = $this->db_adapter->prepare("DELETE FROM comentarios WHERE post = $id");
+        $stmp->execute();
+        $stmp = $this->db_adapter->prepare("DELETE FROM posts WHERE id = $id");
+        $stmp->execute();
+        return true;
+    }
 
 	public function close()
 	{
