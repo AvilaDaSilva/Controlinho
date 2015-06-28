@@ -25,22 +25,22 @@ $post[1]= array('status' =>'ativo', 'type' => 'img', 'media' => '/images/avatar.
 <body>
 <!-- MODAL DE LOGIN -->
 <div id="modal-login" class="modal hidden">
-        <div class="modal-header">
-            <span>Login: </span>
-            <a href="" class="close" >X</a>
-        </div>
-        <div class="modal-body">
-            <form action="/usuarios/login" method="POST">
-                <label class="modal-label">E-mail: </label>
-                <input type="text" name="email-login" placeholder="Digite seu E-mail aqui!" />
-                <label class="modal-label">Senha: </label>
-                <input type="password" name="senha-login" />
-                <a href="/usuarios/retrieve">Esqueceu a senha?</a><br>
-                <a href="/usuarios/save">Quer fazer um novo cadastro?</a><br><br>
-                <button class="btn-success" type="submit">Entrar</button>
-                
-            </form>
-        </div>
+    <div class="modal-header">
+        <span>Login: </span>
+        <a href="" class="close" >X</a>
+    </div>
+    <div class="modal-body">
+        <form action="/usuarios/login" method="POST">
+            <label class="modal-label">E-mail: </label>
+            <input type="text" name="email-login" placeholder="Digite seu E-mail aqui!" />
+            <label class="modal-label">Senha: </label>
+            <input type="password" name="senha-login" />
+            <a href="/usuarios/retrieve">Esqueceu a senha?</a><br>
+            <a href="/usuarios/save">Quer fazer um novo cadastro?</a><br><br>
+            <button class="btn-success" type="submit">Entrar</button>
+
+        </form>
+    </div>
 </div>
 <!-- MENU SUPERIOR -->
 <div class="navbar">
@@ -75,18 +75,18 @@ $post[1]= array('status' =>'ativo', 'type' => 'img', 'media' => '/images/avatar.
                 if ($content['status'] == 'ativo') {
                     ?>
                     <div class="hero-unit">
-                    <div class="popover-title">
-                        <h3><strong><?php echo $content['title']; ?></strong></h3><h5>Postado
-                            por:<?php echo $content['usuario']?></h5>
-                    </div>
-                    <hr>
-<!-- MENSAGENS DE ERRO -->
-<div id="error-nome" class="alert alert-error none">
-    <a href="" class="close pull-right" >x</a>
-    <h4>O campo nome não está correto, verifique!</h4>
-</div>
+                        <div class="popover-title">
+                            <h3><strong><?php echo $content['title']; ?></strong></h3><h5>Postado
+                                por:<?php echo $content['usuario']?></h5>
+                        </div>
+                        <hr>
+                        <!-- MENSAGENS DE ERRO -->
+                        <div id="error-nome" class="alert alert-error none">
+                            <a href="" class="close pull-right" >x</a>
+                            <h4>O campo nome não está correto, verifique!</h4>
+                        </div>
                         <div class="popover-content">
-                        <?php if (isset($content['media']) && isset($content['type'])) { ?>
+                            <?php if (isset($content['media']) && isset($content['type'])) { ?>
 
                                 <?php if ($content['type'] == 'img') { ?>
                                     <img style="height: 320px;" src="<?php echo $content['media'] ?>">
@@ -95,14 +95,14 @@ $post[1]= array('status' =>'ativo', 'type' => 'img', 'media' => '/images/avatar.
                                     <iframe src="<?php echo $content['media'] ?>"></iframe>
                                 <?php } ?>
 
-                        <?php } ?>
+                            <?php } ?>
                         </div>
                         <div class="popover-content center">
-                        <?php $texto = explode(chr(10), $content['post']);
-                        foreach ($texto as $paragrafo) {
-                            ?>
-                            <p><?php echo $paragrafo ?></p>
-                        <?php } ?>
+                            <?php $texto = explode(chr(10), $content['post']);
+                            foreach ($texto as $paragrafo) {
+                                ?>
+                                <p><?php echo $paragrafo ?></p>
+                            <?php } ?>
                         </div>
                     </div>
 
@@ -121,41 +121,34 @@ $post[1]= array('status' =>'ativo', 'type' => 'img', 'media' => '/images/avatar.
     </div>
 
     <footer class="lala">
-=======
-<div id="error-email" class="alert alert-error none">
-    <a href="" class="close pull-right" >x</a>
-    <h4>O campo e-mail não está correto, verifique!</h4>
-</div>
+        <div id="error-email" class="alert alert-error none">
+            <a href="" class="close pull-right" >x</a>
+            <h4>O campo e-mail não está correto, verifique!</h4>
+        </div>
         <div class="container">
             <div class="form-signin">
-            <form action="" method="POST">
-                  <h3> Novo Usuário:</h3>
-                  <label>Nome: </label>
-                  <input type="text" name="nome" placeholder="Digite seu nome aqui!" />
-                  <label>E-mail: </label>
-                  <input type="email" name="email" placeholder="exemplo@controlinho.com" />
-                  <label>Senha: </label>
-                  <input type="password" name="senha" /><br>
-                  <input type="submit" name="salvar" value="Enviar" class="btn-success btn-large" />
-              </form>
+                <form action="" method="POST">
+                    <h3> Novo Usuário:</h3>
+                    <label>Nome: </label>
+                    <input type="text" name="nome" placeholder="Digite seu nome aqui!" />
+                    <label>E-mail: </label>
+                    <input type="email" name="email" placeholder="exemplo@controlinho.com" />
+                    <label>Senha: </label>
+                    <input type="password" name="senha" /><br>
+                    <input type="submit" name="salvar" value="Enviar" class="btn-success btn-large" />
+                </form>
             </div>
-    </div>
- <footer class="lala">
->>>>>>> .r4
-        <div class="center">
-            <p>Um oferecimento de Controlinho</p>
-            <p>&copy; 2015 - Felippe, Gabriel e Iuri</p>
         </div>
-    </footer>
+        <footer class="lala">
+            <div class="center">
+                <p>Um oferecimento de Controlinho</p>
+                <p>&copy; 2015 - Felippe, Gabriel e Iuri</p>
+            </div>
+        </footer>
 
-<<<<<<< .mine
 </div>
-=======
-    <script src="../assets/js/bootstrap.js"></script>
-    <script src="../assets/js/bootstrap.min.js"></script>
->>>>>>> .r4
-
-<<<<<<< .mine
+<script src="../assets/js/bootstrap.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap-transition.js"></script>
 <script src="../assets/js/bootstrap-alert.js"></script>
@@ -179,7 +172,5 @@ $post[1]= array('status' =>'ativo', 'type' => 'img', 'media' => '/images/avatar.
     });
 </script>
 </body>
-=======
-  </body>
->>>>>>> .r4
+</body>
 </html>
