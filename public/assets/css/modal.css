@@ -1,0 +1,56 @@
+.modal {
+position: absolute;
+font-family: Arial, Helvetica, sans-serif;
+top: 200px;
+left: 1150px;
+width: 300px;
+background: black;
+z-index: 99999;
+display: none;
+-webkit-transition: opacity 400ms ease-in;
+-moz-transition: opacity 400ms ease-in;
+transition: opacity 400ms ease-in;
+pointer-events: none;
+}
+
+.modal-label {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.modal:target {
+display: block;
+pointer-events: auto;   
+}
+
+.close {
+color: red;
+float: right;
+text-align: center;
+text-decoration: none;
+}
+
+.close:hover {
+    color: pink;
+}
+.close:visited {
+    color: red;
+}
+
+.modal-body {
+    background-color: white;
+    height: 200px;
+}
+
+.modal-header {
+    background-color: #4F2F4F;
+    color: lightblue; 
+}
+
+.none {
+    display: none;
+}
+
+.none:target {
+    display: block;
+}
