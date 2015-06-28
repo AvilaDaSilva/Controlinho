@@ -23,6 +23,14 @@
   }
 }
 
+.icons{
+    float: right;
+    margin-right: 15px;
+    margin-top: 5px;
+    width: 17px !important;
+    height: 17px !important;
+}
+
 .center{
   text-align: center;
 }
