@@ -1,5 +1,3 @@
-<?php $post[0]= array( 'status' =>'ativo','type' => 'img', 'media' => '/images/cabecalho.png' ,'title' => 'teste dos post muito loco tio', 'post' =>'teste ehaiushhasdlhalhuiashuasiuhasuihuiea aiuase huia ehiasiuhe auih eashuihe suih aes eahs eauhi asei as uhua uhiase iea huiaseu  ea uhieiu ash ueia hia euaih eiuash suh eawhuaiesu iea de linha'.chr(10).'quebrou', 'usuario' => 'jamelao');
-$post[1]= array('status' =>'ativo', 'type' => 'img', 'media' => '/images/avatar.jpg' ,'title' => 'teste dos post muito loco tio', 'post' =>'teste de linha'.chr(10).'quebrou', 'usuario' => 'jamelao');?>
 <script>
     function AbrirLogin(){
         var login = document.getElementById('modal-login').style.display;
@@ -56,9 +54,9 @@ $post[1]= array('status' =>'ativo', 'type' => 'img', 'media' => '/images/avatar.
     <img src="/images/cabecalho.png">
     <div class="navbar-inner">
         <div class="container-fluid">
-            <a class="btn-first"><img src="/images/buttons/botao_home.png"></a>
-            <a class="btn-normal"><img src="/images/buttons/botao_about.png"></a>
-            <a class="btn-normal"><img src="/images/buttons/botao_arcade.png"></a>
+            <a class="btn-first" href="/"><img src="/images/buttons/botao_home.png"></a>
+            <a class="btn-normal" href="/about/index"><img src="/images/buttons/botao_about.png"></a>
+            <a class="btn-normal" href="http://clickjogos.com.br"><img src="/images/buttons/botao_arcade.png"></a>
             <a class="btn-login" href="#" onclick="AbrirLogin()"><img src="/images/buttons/botao_login.png"></a>
         </div>
     </div>
@@ -125,12 +123,11 @@ $post[1]= array('status' =>'ativo', 'type' => 'img', 'media' => '/images/avatar.
     </div>
 
     <footer class="lala">
-        <footer class="lala">
-            <div class="center">
-                <p>Um oferecimento de Controlinho</p>
-                <p>&copy; 2015 - Felippe, Gabriel e Iuri</p>
-            </div>
-        </footer>
+        <div class="center">
+            <p>Um oferecimento de Controlinho</p>
+            <p>&copy; 2015 - Felippe, Gabriel e Iuri</p>
+        </div>
+    </footer>
 
 </div>
 <script src="../assets/js/bootstrap.js"></script>
