@@ -17,21 +17,16 @@ class Posts
     {
         if($_POST)
         {
-            $post = $_POST;
+            $dados = $_POST;
             $adapter = new DbAdapter;
             $post = new Posts();
-
-            if(preg_match('/[a-zA-ZÀ-ú]$/', $post['nome']) == 0){
-                return header('Location: http://localhost:8080/posts/save#error-nome');
-            }
-            elseif(!filter_var($post['email'], FILTER_VALIDATE_EMAIL)){
-                return header('Location: http://localhost:8080/posts/save#error-email');
-            }
-
-            $post->nome = $post['nome'];
-            $post->nome = $post['email'];
-            $post->nome = $post['senha'];
-
+            $nome = $_SESSION['nome'];
+            $user = $adapter->find('usuario', $nome);
+            $dados['data_post'] = date('');
+            $post->post = $dados['titulo'];
+            $post->post = $dados['corpo'];
+            $post->post = $dados['data_post'];
+            $post->post = $user['id'];
             $adapter->insert($post);
         }
         else
@@ -42,6 +37,7 @@ class Posts
 
     public function deleteAction()
     {
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
     }
 
     public function homeAction()
