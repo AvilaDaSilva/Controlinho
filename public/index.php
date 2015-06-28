@@ -8,8 +8,8 @@ include 'bootstrap.php';
 use Controller\Usuarios as Usuarios;
 use Controller\Posts as Posts;
 
-$usuarios = new Usuarios;
-$posts = new Posts;
+$usuarios = new Usuarios();
+$posts = new Posts();
 
 $uri = $_SERVER['REQUEST_URI'];
 
@@ -33,19 +33,19 @@ else if($uri == '/usuarios')
 
 
 /* POSTS */
-else if($uri == '/posts/retrieve')
+else if($uri == '/index/retrieve')
 {
     $posts->retrieveAction();
 }
-else if($uri == '/posts/save')
+else if($uri == '/save')
 {
     
 }
-else if($uri == '/posts/delete')
+else if($uri == '/delete')
 {
     
 }
-else if($uri == '/home')
+else if($uri == '/')
 {
     $posts->homeAction();
 }
