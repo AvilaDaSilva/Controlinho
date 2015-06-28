@@ -1,4 +1,5 @@
 <?php
+
 namespace Controller;
 
 use \Db\DbAdapter as DbAdapter;
@@ -26,9 +27,9 @@ class Usuarios
                     return header('Location: http://localhost:8080/usuarios/save#error-email');
                 }
                 
-                set $usuario->nome = $post['nome'];
-                set $usuario->nome = $post['email'];
-                set $usuario->nome = $post['senha'];
+                $usuario->nome = $post['nome'];
+                $usuario->nome = $post['email'];
+                $usuario->nome = $post['senha'];
                 
                 $adapter->insert($usuario);
             }
