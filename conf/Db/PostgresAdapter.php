@@ -71,6 +71,13 @@ class PostgresAdapter implements AdapterInterface
         return $stmp->fetchAll();
 	}
 
+    public function findByName($table, $name)
+    {
+        $stmp = $this->db_adapter->prepare("SELECT * FROM $table WHERE nome = $name");
+        $stmp->execute();
+        return $stmp->fetchAll();
+    }
+
 	public function delete($table, $id)
 	{
         $stmp = $this->db_adapter->prepare("DELETE FROM $table WHERE id = $id");
