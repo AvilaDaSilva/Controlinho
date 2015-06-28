@@ -1,7 +1,122 @@
+<script>
+    function AbrirLogin(){
+        var login = document.getElementById('modal-login').style.display;
+        if(login == 'none'){
+            document.getElementById('modal-login').style.display = 'block';
+        }else{
+            document.getElementById('modal-login').style.display = 'none';
+        }
+    }
+</script>
 <?php
-/**
- * Created by PhpStorm.
- * User: avila
- * Date: 28/06/15
- * Time: 02:07
- */
+session_start();
+?>
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Controlinho</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="../assets/css/bootstrap.css" rel="stylesheet">
+    <link href="../assets/css/modal.css" rel="stylesheet">
+
+    <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="/images/favicon.jpg" >
+</head>
+
+<body>
+<!-- MODAL DE LOGIN -->
+<div id="modal-login" class="modal" style="display: none">
+    <div class="modal-header">
+        <span>Login: </span>
+        <a href="" class="close" >X</a>
+    </div>
+    <div class="modal-body">
+        <form action="/usuarios/login" method="POST">
+            <label class="modal-label">E-mail: </label>
+            <input type="text" name="email-login" placeholder="Digite seu E-mail aqui!" />
+            <label class="modal-label">Senha: </label>
+            <input type="password" name="senha-login" />
+            <a href="/usuarios/retrieve">Esqueceu a senha?</a><br>
+            <a href="/usuarios/save">Quer fazer um novo cadastro?</a><br><br>
+            <button class="btn-success" type="submit">Entrar</button>
+
+        </form>
+    </div>
+</div>
+<!-- MENU SUPERIOR -->
+<div class="navbar">
+    <img src="/images/cabecalho.png">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="btn-first" href="/"><img src="/images/buttons/botao_home.png"></a>
+            <a class="btn-normal" href="/about/index"><img src="/images/buttons/botao_about.png"></a>
+            <a class="btn-normal" href="http://clickjogos.com.br"><img src="/images/buttons/botao_arcade.png"></a>
+            <a class="btn-login" href="#" onclick="AbrirLogin()"><img src="/images/buttons/botao_login.png"></a>
+        </div>
+    </div>
+</div>
+<!-- SIDEBAR -->
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3">
+            <div class="well sidebar-nav">
+                <?php if(isset($_SESSION)){ ?>
+                    <img src="/images/<?=$_SESSION['avatar']?>">
+                    <br>
+                    <h4><?= $_SESSION['username']?></h4>
+                <?php } else { ?>
+                    <img src="/images/avatar.jpg">
+                    <br>
+                    <h4>Visitante</h4>
+                <?php } ?>
+            </div>
+        </div>
+        <div class="span9">
+            <div class="hero-unit">
+                <div class="popover-title">
+                    <h3>Criando novo post...</h3>
+                </div>
+                <br>
+                <span>Titulo</span><i class="icon-arrow-down icons"></i>
+                <input class="input-block-level" type="text" placeholder=".input-block-level">
+                <br><br>
+                <span>Corpo</span><i class="icon-arrow-down icons"></i>
+                <textarea class="input-block-level" rows="3"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <footer class="lala">
+        <div class="center">
+            <p>Um oferecimento de Controlinho</p>
+            <p>&copy; 2015 - Felippe, Gabriel e Iuri</p>
+        </div>
+    </footer>
+
+</div>
+<script src="../assets/js/bootstrap.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/jquery.js"></script>
+<script src="../assets/js/bootstrap-transition.js"></script>
+<script src="../assets/js/bootstrap-alert.js"></script>
+<script src="../assets/js/bootstrap-modal.js"></script>
+<script src="../assets/js/bootstrap-dropdown.js"></script>
+<script src="../assets/js/bootstrap-scrollspy.js"></script>
+<script src="../assets/js/bootstrap-tab.js"></script>
+<script src="../assets/js/bootstrap-tooltip.js"></script>
+<script src="../assets/js/bootstrap-popover.js"></script>
+<script src="../assets/js/bootstrap-button.js"></script>
+<script src="../assets/js/bootstrap-collapse.js"></script>
+<script src="../assets/js/bootstrap-carousel.js"></script>
+<script src="../assets/js/bootstrap-typeahead.js"></script>
+</body>
+</html>

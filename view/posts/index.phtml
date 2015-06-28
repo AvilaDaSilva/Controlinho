@@ -8,6 +8,9 @@
         }
     }
 </script>
+<?php
+    session_start();
+?>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -82,9 +85,17 @@
                 if ($content['status'] == '1') {
                     ?>
                     <div class="hero-unit">
+                        <form action="/delete" method="POST">
+                            <input type="hidden" name="id" value="<?php echo $content['id'] ?>">
+                            <input type="submit" class="icon-remove icons" value="" >
+                        </form>
+                        <form action="/save" method="POST">
+                            <input type="hidden" name="id" value="<?php echo $content['id'] ?>">
+                            <input type="submit" class="icon-pencil icons" value="" >
+                        </form>
                         <div class="popover-title">
-                            <h3><strong><?php echo $content['titulo']; ?></strong></h3><h5>Postado
-                                por: <?php echo $content['nome']?></h5>
+                            <h3><strong><?php echo $content['titulo']; ?></strong></h3>
+                            <h5>Postado por: <?php echo $content['nome']?></h5>
                         </div>
                         <hr>
                         <div class="popover-content">
@@ -152,7 +163,15 @@
             items: 100,
             itemsOnPage: 10
         });
-    });
+    }
+    function colocarDelete(ident)
+    {
+        location.href="/";
+    }
+    function colocarSave(){
+        <?php $_SESSION['idPost'] = "<script>document.write(caraio)</script>" ?>;
+        location.href="/save";
+    }
 </script>
 </body>
 </html>
