@@ -8,26 +8,11 @@ use Zend\View\Model\ViewModel;
 
 class Posts
 {
-
-    public function retrieveAction()
-    {
-    }
-
     public function saveAction()
     {
         if($_POST)
         {
-            $dados = $_POST;
-            $adapter = new DbAdapter;
-            $post = new Posts();
-            $nome = $_SESSION['nome'];
-            $user = $adapter->find('usuario', $nome);
-            $dados['data_post'] = date('');
-            $post->post = $dados['titulo'];
-            $post->post = $dados['corpo'];
-            $post->post = $dados['data_post'];
-            $post->post = $user['id'];
-            $adapter->insert($post);
+
         }
         else
         {
@@ -37,13 +22,22 @@ class Posts
 
     public function deleteAction()
     {
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        $adapter = new DbAdapter();
+        $id = $_POST['id'];
+        $post = $adapter->deletePost($id);
+        if ($post == true){
+            header('Location: /#success');
+            //MENSAGEM DE SUCESSO VER COM O IURI
+        } else {
+            header('Location: /#error');
+            //MENSAGEM DE ERROR VER COM O IURI
+        }
     }
 
     public function homeAction()
     {
         $adapter = new DbAdapter();
-        $post = $adapter->fetchAllPosts('posts');
+        $post = $adapter->fetchAllPosts();
         $this->content = $post;
         require '../view/posts/index.phtml';
     }
