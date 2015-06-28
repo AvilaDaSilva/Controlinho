@@ -45,7 +45,9 @@ class PostgresAdapter implements AdapterInterface
 
 	public function update($table, $values, $where)
 	{
-
+        $stmp = $this->db_adapter->prepare("UPDATE $table SET $values WHERE $where");
+        $stmp->execute();
+        return true;
 	}
 	
 	public function fetchAll($table, $where = null, $order = null)
@@ -55,21 +57,25 @@ class PostgresAdapter implements AdapterInterface
 		return $stmp->fetchAll();
 	}
 
-    public function fetchAllPosts($table = 'posts', $where = null, $order = null)
+    public function fetchAllPosts()
     {
-        $stmp = $this->db_adapter->prepare("SELECT posts.id, posts.titulo, posts.corpo, usuario.status, usuario.nome, anexos.src, anexos.media FROM $table JOIN usuario ON (posts.usuario = usuario.id) JOIN anexos ON (anexos.post = posts.id)");
+        $stmp = $this->db_adapter->prepare("SELECT posts.id, posts.titulo, posts.corpo, usuario.status, usuario.nome, anexos.src, anexos.media FROM posts JOIN usuario ON (posts.usuario = usuario.id) JOIN anexos ON (anexos.post = posts.id)");
         $stmp->execute();
         return $stmp->fetchAll();
     }
 	
 	public function find($table, $id)
 	{
-
+        $stmp = $this->db_adapter->prepare("SELECT * FROM $table WHERE id = $id");
+        $stmp->execute();
+        return $stmp->fetchAll();
 	}
 
 	public function delete($table, $id)
 	{
-
+        $stmp = $this->db_adapter->prepare("DELETE FROM $table WHERE id = $id");
+        $stmp->execute();
+        return true;
 	}
 
 	public function close()
