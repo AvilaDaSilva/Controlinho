@@ -59,16 +59,12 @@ class PostgresAdapter implements AdapterInterface
         return true;
     }
 
-    public function updatePost($values, $file)
+    public function updatePost($id, $posts, $anexos)
     {
-        $sql = "UPDATE posts SET (titulo, corpo, usuario, data_post) VALUES ('".$values['titulo']."', '".$values['corpo']."', '".$values['usuario']."', '".$values['dataPost']."')";
+        $sql = "UPDATE posts SET $posts WHERE id = $id";
         $stmp = $this->db_adapter->prepare($sql);
         $stmp->execute();
-        $sql = "SELECT id FROM posts WHERE titulo = '".$values['titulo']."'";
-        $stmp = $this->db_adapter->prepare($sql);
-        $stmp->execute();
-        $id = $stmp->fetchAll();
-        $sql = "UPDATE anexos (src, media, post) VALUES ('".$values['tipoMidia']."', '$file', ".$id[0]['id'].")";
+        $sql = "UPDATE anexos SET $anexos WHERE post = $id";
         $stmp = $this->db_adapter->prepare($sql);
         $stmp->execute();
 
