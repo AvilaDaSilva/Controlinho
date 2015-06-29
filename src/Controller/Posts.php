@@ -10,15 +10,30 @@ class Posts
 {
     public function saveAction()
     {
-        if($_POST['id'])
+        if(isset($_POST['id']))
         {
             $adapter = new DbAdapter();
-            $id = $_POST['id'];
-            $this->content = $adapter->fetchAllPostsById($id);
+            if(isset($_POST['titulo'])){
+                $id = $_POST['id'];
+                $posts = "titulo = '".$_POST['titulo']."', corpo = '".$_POST['corpo']."', data_post = '".date('Y-m-d')."'";
+                if($_FILES['midia']['name'] != ''){
+                    $anexos = "src = '".$_POST['tipoMidia']."', media = '".$_FILES['midia']['name']."'";
+                } else {
+                    $anexos = "src = ".$_POST['tipoMidia']."";
+                }
+
+                $result = $adapter->updatePost($id, $posts, $anexos);
+
+                header('Location: /#success');
+            } else {
+                $id = $_POST['id'];
+                $this->content = $adapter->fetchAllPostsById($id);
+            }
             require '../view/posts/save.phtml';
         }
-        else if($_POST)
+        else if(!isset($_POST))
         {
+
             session_start();
             $adapter = new DbAdapter();
             $filename = $_FILES['midia']['name'];
@@ -40,6 +55,7 @@ class Posts
             $values['usuario'] = $_SESSION['id'];
 
             $post = $adapter->insertPost($values, $filename);
+
             header('Location: /#success');
         } else {
             require '../view/posts/save.phtml';
