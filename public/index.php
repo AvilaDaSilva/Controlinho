@@ -33,17 +33,13 @@ else if($uri == '/usuarios')
 
 
 /* POSTS */
-else if($uri == '/index/retrieve')
-{
-    $posts->retrieveAction();
-}
 else if($uri == '/save')
 {
-    
+    $posts->saveAction();
 }
 else if($uri == '/delete')
 {
-    
+    $posts->deleteAction();
 }
 else if($uri == '/')
 {
