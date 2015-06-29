@@ -43,6 +43,19 @@ class PostgresAdapter implements AdapterInterface
 		 return $this->db_adapter->lastInsertId($table.'_id_seq');
 	}
 
+    public function insertPost($values, $file)
+    {
+        $sql = "INSERT INTO posts (titulo, corpo, usuario, data_post) VALUES ('".$values['titulo']."', '".$values['corpo']."', '".$values['usuario']."', '".$values['dataPost']."')";
+        $stmp = $this->db_adapter->prepare($sql);
+        $sql = "SELECT id FROM posts WHERE titulo = '".$values['titulo']."'";
+        $id = $this->db_adapter->prepare($sql);
+        $sql = "INSERT INTO anexos (src, media, post) VALUES ('".$values['tipoMidia']."', '$file', $id)";
+        $stmp = $this->db_adapter->prepare($sql);
+        $stmp->execute();
+
+        return true;
+    }
+
 	public function update($table, $values, $where)
 	{
         $stmp = $this->db_adapter->prepare("UPDATE $table SET $values WHERE $where");
