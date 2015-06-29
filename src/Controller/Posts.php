@@ -13,9 +13,23 @@ class Posts
 
         if($_POST)
         {
-            var_dump($_POST);
-            var_dump($_FILES);exit;
+            session_start();
+            $adapter = new DbAdapter();
+            $file = fopen($_FILES['midia']['tmp_name'],'r');
+            $file = fread($file,filesize($_FILES['midia']['tmp_name']));
+            $filep = addslashes($file);
+            //var_dump($file);
+            $files = pg_unescape_bytea($filep);
+            //var_dump($file);exit;
 
+            $values['titulo'] = $_POST['titulo'];
+            $values['corpo'] = $_POST['corpo'];
+            $values['tipoMidia'] = $_POST['tipoMidia'];
+            $values['dataPost'] = date('');
+            $values['usuario'] = $_SESSION['id'];
+
+            $post = $adapter->insertPost($values, $files);
+            header('Location: /#success');
         }
         else
         {
@@ -28,13 +42,7 @@ class Posts
         $adapter = new DbAdapter();
         $id = $_POST['id'];
         $post = $adapter->deletePost($id);
-        if ($post == true){
-            header('Location: /#success');
-            //MENSAGEM DE SUCESSO VER COM O IURI
-        } else {
-            header('Location: /#error');
-            //MENSAGEM DE ERROR VER COM O IURI
-        }
+        header('Location: /#success');
     }
 
     public function homeAction()
