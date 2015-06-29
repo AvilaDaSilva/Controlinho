@@ -10,31 +10,45 @@ class Posts
 {
     public function saveAction()
     {
-
-        if($_POST)
+        if($_POST['id'])
+        {
+            $adapter = new DbAdapter();
+            $id = $_POST['id'];
+            $this->content = $adapter->fetchAllPostsById($id);
+            require '../view/posts/save.phtml';
+        }
+        else if($_POST)
         {
             session_start();
             $adapter = new DbAdapter();
-            $file = fopen($_FILES['midia']['tmp_name'],'r');
-            $file = fread($file,filesize($_FILES['midia']['tmp_name']));
-            $filep = addslashes($file);
+            $filename = $_FILES['midia']['name'];
+            $file = $_FILES['midia']['tmp_name'];
+            move_uploaded_file($file, "images/user-image/".$filename);
+
+            //var_dump($filename);exit;
+            //$file = fopen($_FILES['midia']['tmp_name'],'r');
+            //$file = fread($file,filesize($_FILES['midia']['tmp_name']));
+            //$file = addslashes($file);
             //var_dump($file);
-            $files = pg_unescape_bytea($filep);
+            //$file = base64_encode($file);
             //var_dump($file);exit;
 
             $values['titulo'] = $_POST['titulo'];
             $values['corpo'] = $_POST['corpo'];
             $values['tipoMidia'] = $_POST['tipoMidia'];
-            $values['dataPost'] = date('');
+            $values['dataPost'] = date('Y-m-d');
             $values['usuario'] = $_SESSION['id'];
 
-            $post = $adapter->insertPost($values, $files);
+            $post = $adapter->insertPost($values, $filename);
             header('Location: /#success');
-        }
-        else
-        {
+        } else {
             require '../view/posts/save.phtml';
         }
+    }
+
+    public function editarAction()
+    {
+
     }
 
     public function deleteAction()
