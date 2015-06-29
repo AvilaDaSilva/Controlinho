@@ -7,6 +7,9 @@
             document.getElementById('modal-login').style.display = 'none';
         }
     }
+    function Cancel(){
+        location.href="/";
+    }
 </script>
 <?php
 session_start();
@@ -86,21 +89,27 @@ session_start();
                     <h3>Criando novo post...</h3>
                 </div>
                 <br>
-                <span>Titulo</span><i class="icon-arrow-down icons"></i>
-                <input class="input-block-level" type="text" placeholder=".input-block-level">
-                <br><br>
-                <span>Corpo</span><i class="icon-arrow-down icons"></i>
-                <textarea class="input-block-level" rows="3"></textarea>
-                <br><br>
-                <div class="controls controls-row">
-                    <span>Tipo de Midia</span><i class="icon-arrow-down icons"></i>
-                    <select class="span2">
+                <form action="/save" method="POST" enctype="multipart/form-data">
+                    <span>Titulo</span><i class="icon-arrow-down icons"></i>
+                    <input class="input-block-level" type="text" name="titulo" placeholder="Insira um titulo para seu post">
+                    <br><br>
+                    <span>Corpo</span><i class="icon-arrow-down icons"></i>
+                    <textarea class="input-block-level" rows="3" name="corpo" placeholder="Escreva aqui seu post"></textarea>
+                    <br>
+                    <span>Tipo de Midia</span><i class="icon-arrow-down icons"></i><br>
+                    <select class="span2" name="tipoMidia">
                         <option value="">--------</option>
                         <option value="video">Vídeo</option>
                         <option value="img">Imagem</option>
                     </select>
-                    <span>Midia</span>
-                </div>
+                    <br><br>
+                    <span>Midia</span><i class="icon-arrow-down icons"></i><br>
+                    <input type="file" name="midia">
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Salvar Post</button>
+                        <button onclick="Cancel();" type="button" class="btn">Cancelar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
