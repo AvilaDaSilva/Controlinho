@@ -102,10 +102,10 @@
                             <?php if (isset($content['media']) && isset($content['src'])) { ?>
 
                                 <?php if ($content['src'] == 'img') { ?>
-                                    <img style="height: 320px;" src="<?php echo $content['media'] ?>">
+                                    <img style="height: 320px;" src="images/user-image/<?php echo $content['media'] ?>">
                                 <?php } ?>
                                 <?php if ($content['src'] == 'video') { ?>
-                                    <iframe src="<?php echo $content['media'] ?>"></iframe>
+                                    <iframe src="images/user-image/<?php echo $content['media'] ?>"></iframe>
                                 <?php } ?>
 
                             <?php } ?>
@@ -163,14 +163,6 @@
             items: 100,
             itemsOnPage: 10
         });
-    }
-    function colocarDelete(ident)
-    {
-        location.href="/";
-    }
-    function colocarSave(){
-        <?php $_SESSION['idPost'] = "<script>document.write(caraio)</script>" ?>;
-        location.href="/save";
     }
 </script>
 </body>

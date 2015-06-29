@@ -91,27 +91,57 @@ $_SESSION['id'] = 1;
                     <h3>Criando novo post...</h3>
                 </div>
                 <br>
-                <form action="/save" method="POST" enctype="multipart/form-data">
-                    <span>Titulo</span><i class="icon-arrow-down icons"></i>
-                    <input class="input-block-level" type="text" name="titulo" placeholder="Insira um titulo para seu post">
-                    <br><br>
-                    <span>Corpo</span><i class="icon-arrow-down icons"></i>
-                    <textarea class="input-block-level" rows="3" name="corpo" placeholder="Escreva aqui seu post"></textarea>
-                    <br>
-                    <span>Tipo de Midia</span><i class="icon-arrow-down icons"></i><br>
-                    <select class="span2" name="tipoMidia">
-                        <option value="">--------</option>
-                        <option value="video">Vídeo</option>
-                        <option value="img">Imagem</option>
-                    </select>
-                    <br><br>
-                    <span>Midia</span><i class="icon-arrow-down icons"></i><br>
-                    <input type="file" name="midia">
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-success">Salvar Post</button>
-                        <button onclick="Cancel();" type="button" class="btn">Cancelar</button>
-                    </div>
-                </form>
+                <?php if($this->content){ ?>
+                    <form action="/save" method="POST" enctype="multipart/form-data">
+                        <span>Titulo</span><i class="icon-arrow-down icons"></i>
+                        <input value="<?php echo $this->content[0]['titulo'] ?>" class="input-block-level" type="text" name="titulo" placeholder="Insira um titulo para seu post">
+                        <br><br>
+                        <span>Corpo</span><i class="icon-arrow-down icons"></i>
+                        <textarea class="input-block-level" rows="3" name="corpo" placeholder="Escreva aqui seu post"><?php echo $this->content[0]['corpo'] ?></textarea>
+                        <br>
+                        <span>Tipo de Midia</span><i class="icon-arrow-down icons"></i><br>
+                        <select value="<?php echo $this->content[0]['src'] ?>" class="span2" name="tipoMidia">
+                            <?php if($this->content[0]['src'] == 'video' ){ ?>
+                                <option value="">--------</option>
+                                <option value="video" selected>Vídeo</option>
+                                <option value="img">Imagem</option>
+                            <?php } else { ?>
+                                <option value="">--------</option>
+                                <option value="video">Vídeo</option>
+                                <option value="img" selected>Imagem</option>
+                            <?php } ?>
+                        </select>
+                        <br><br>
+                        <span>Midia</span><i class="icon-arrow-down icons"></i><br>
+                        <input value="<?php echo $this->content[0]['media'] ?>" type="file" name="midia">
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">Salvar Post</button>
+                            <button onclick="Cancel();" type="button" class="btn">Cancelar</button>
+                        </div>
+                    </form>
+                <?php } else {?>
+                    <form action="/save" method="POST" enctype="multipart/form-data">
+                        <span>Titulo</span><i class="icon-arrow-down icons"></i>
+                        <input class="input-block-level" type="text" name="titulo" placeholder="Insira um titulo para seu post">
+                        <br><br>
+                        <span>Corpo</span><i class="icon-arrow-down icons"></i>
+                        <textarea class="input-block-level" rows="3" name="corpo" placeholder="Escreva aqui seu post"></textarea>
+                        <br>
+                        <span>Tipo de Midia</span><i class="icon-arrow-down icons"></i><br>
+                        <select class="span2" name="tipoMidia">
+                            <option value="">--------</option>
+                            <option value="video">Vídeo</option>
+                            <option value="img">Imagem</option>
+                        </select>
+                        <br><br>
+                        <span>Midia</span><i class="icon-arrow-down icons"></i><br>
+                        <input type="file" name="midia">
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">Salvar Post</button>
+                            <button onclick="Cancel();" type="button" class="btn">Cancelar</button>
+                        </div>
+                    </form>
+                <?php } ?>
             </div>
         </div>
     </div>
