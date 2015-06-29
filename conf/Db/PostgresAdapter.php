@@ -87,7 +87,11 @@ class PostgresAdapter implements AdapterInterface
 
     public function fetchAllPosts()
     {
-        $stmp = $this->db_adapter->prepare("SELECT posts.id, posts.titulo, posts.corpo, usuario.status, usuario.nome, anexos.src, anexos.media FROM posts JOIN usuario ON (posts.usuario = usuario.id) JOIN anexos ON (anexos.post = posts.id)");
+        $stmp = $this->db_adapter
+            ->prepare("SELECT posts.id, posts.titulo, posts.corpo, usuario.status,"
+                . " usuario.nome, anexos.src, anexos.media"
+                . " FROM posts JOIN usuario ON (posts.usuario = usuario.id) "
+                . "JOIN anexos ON (anexos.post = posts.id)");
         $stmp->execute();
         return $stmp->fetchAll();
     }
@@ -131,10 +135,39 @@ class PostgresAdapter implements AdapterInterface
         $stmp->execute();
         return true;
     }
+    
+    public function updateUsuario($values, $id)
+	{
+        
+        if(isset($values['nome'])){
+        $nome = $values['nome'];
+        $sql = "UPDATE usuario SET nome = '$nome' WHERE id = $id";
+        $stmp = $this->db_adapter->prepare($sql);
+        $stmp->execute();
+        }
+        if(isset($values['email'])){
+        $email = $values['email'];
+        $sql = "UPDATE usuario SET email = '$email' WHERE id = $id";
+        $stmp = $this->db_adapter->prepare($sql);
+        $stmp->execute();
+        }
+        if(isset($values['senha'])){
+        $senha = $values['senha'];
+        $sql = "UPDATE usuario SET senha = '$senha' WHERE id = $id";
+        $stmp = $this->db_adapter->prepare($sql);
+        $stmp->execute();
+        }
+        if(isset($values['avatar'])){
+        $avatar = $values['avatar'];
+        $sql = "UPDATE usuario SET avatar = $avatar WHERE id = $id";
+        $stmp = $this->db_adapter->prepare($sql);
+        $stmp->execute();
+        }
+        return true;
+    }
 
 	public function close()
 	{
 		$this->db_adapter = null;
 	}
-
 }

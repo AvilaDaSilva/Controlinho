@@ -26,9 +26,13 @@ else if($uri == '/usuarios/delete')
 {
     $usuarios->deleteAction();
 }
-else if($uri == '/usuarios')
+else if($uri == '/usuarios/index')
 {
-    $usuarios->homeAction();
+    $usuarios->indexAction();
+}
+else if($uri == '/usuarios/logout')
+{
+    $usuarios->logoutAction();
 }
 
 

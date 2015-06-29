@@ -1,0 +1,221 @@
+<?php
+    if(!isset($_SESSION)){
+    session_start();
+    }       
+    $sessao = $_SESSION;
+?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Controlinho</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="../assets/css/bootstrap.css" rel="stylesheet">
+    <link href="../assets/css/modal.css" rel="stylesheet">
+
+    <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+ 	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="/images/favicon.jpg" >
+  </head>
+
+  <body>
+<!-- MODAL DE SESSAO -->
+<?php if(isset($_SESSION['username'])){ ?>
+<div id="modal-login" class="modal">
+        <div class="modal-header">
+            <span><?php echo $_SESSION['username']; ?>: </span>
+            <a href="#close" class="close" >X</a>
+        </div>
+        <div class="modal-body">
+                <h3>Oque deseja fazer?</h3>
+                <a href="/usuarios/index">Configuraçõs de usuário.</a><br>
+                <a href="/usuarios/logout">Sair.</a>
+        </div>
+</div>
+<?php }else{ ?>
+<div id="modal-login" class="modal">
+        <div class="modal-header">
+            <span>Login: </span>
+            <a href="#close" class="close" >X</a>
+        </div>
+        <div class="modal-body">
+            <form action="/usuarios/retrieve" method="POST">
+                <label class="modal-label">E-mail: </label>
+                <input type="text" name="email" placeholder="Digite seu E-mail aqui!" />
+                <label class="modal-label">Senha: </label>
+                <input type="password" name="senha" />
+                <a href="/usuarios/retrieve">Esqueceu a senha?</a><br>
+                <a href="/usuarios/save">Quer fazer um novo cadastro?</a><br><br>
+                <button class="btn-success" type="submit">Entrar</button>
+                
+            </form>
+        </div>
+</div>
+<?php } ?>
+<!-- MENU SUPERIOR -->
+    <div class="navbar">
+    	<img src="/images/cabecalho.png">
+      	<div class="navbar-inner">
+        	<div class="container-fluid">
+            <a class="btn-first"><img src="/images/buttons/botao_home.png"></a>
+            <a class="btn-normal"><img src="/images/buttons/botao_about.png"></a>
+            <a class="btn-normal"><img src="/images/buttons/botao_arcade.png"></a>
+            <a class="btn-login" href="#modal-login"><img src="/images/buttons/botao_login.png"></a>
+       		 </div>
+      	</div>
+    </div>
+<!-- AUTENTICAÇÂO DE LOGIN -->
+<?php
+if(!isset($_SESSION['username'])){
+echo '<div id="error-nome" class="alert alert-error">
+    <a href="" class="close pull-right" >x</a>
+    <h4>Você não está logado, não tem acesso a este recurso!</h4></div>';
+    }else{ ?>
+<!-- MENSAGENS DE ERRO -->
+<?php if(isset($GLOBALS['error_auth'])){
+echo '<div id="error-nome" class="alert alert-error">
+    <a href="" class="close pull-right" >x</a>';
+    if($GLOBALS['error_auth'] == 'nome'){
+        echo '<h4>O campo nome não está correto, verifique!</h4>';
+    }
+    if($GLOBALS['error_auth'] == 'sem_campos'){
+        echo '<h4>É nescessário mudar algo para que seja aplicada uma mudança!</h4>';
+    }
+    if($GLOBALS['error_auth'] == 'email'){
+        echo '<h4>O campo e-mail não está correto, verifique!</h4>';
+    }
+    if($GLOBALS['error_auth'] == 'email_existente'){
+        echo '<h4>Email já cadastrado, verifique!</h4>';
+    }
+echo '</div>';
+} ?>
+<!-- SIDEBAR -->
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3">
+            <div class="well sidebar-nav">
+                <?php
+                if(!isset($_SESSION['avatar'])){ ?>
+                    <img src="/images/avatar.jpg">
+                <?php }else{ ?>
+                    <img src="/images/user-avatar/<?=$_SESSION['avatar']?>">
+                <?php } ?>
+                    <br>
+                    <h4>Bem vindo(a) <?= $_SESSION['username']?></h4>
+                    <a style="cursor: pointer;" onclick="mostraPerfil();">Editar Perfil</a><br>
+                    <a style="cursor: pointer;" onclick="mostraPostagens();">Editar Postagens</a><br>
+            </div>
+        </div>
+        <div id="editar_perfil" class="span9 hero-unit">
+            <label><h3>Editar Perfil</h3></label>
+            <form action="" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="tipo" value="perfil"/>
+                <div class="pull-right" id="div_avatar">
+                    <label>Mudar avatar:</label>
+                    <?php if(!isset($_SESSION['avatar'])){ ?>
+                    <img id="mudar_avatar" style="border-style: solid; border-color: black; border-width: 1px;"
+                        src="/images/avatar.jpg">
+                    <?php }else{ ?>
+                    <img style="border-style: solid; border-color: black; border-width: 1px;"
+                        src="/images/user-avatar/<?=$_SESSION['avatar']?>">
+                    <?php } ?><br>
+                    <input onchange="mudaImagen(this.value);" id="avatar" type="file" name="avatar" />
+                </div>
+                <label>Novo nome: </label>
+                <input type="text" name="nome" placeholder="Digite seu nome aqui!" />
+                <div id="div_email">
+                    <div class="controls">
+                        <label>E-mail atual: </label>
+                        <input onchange="checaEmail(this.value);" type="text" id="email" placeholder="exemplo@controlinho.com" />
+                        <span id="span_email" style="display: none;" class="help-inline">
+                        O e-mail não corresponde!</span>
+                    </div>
+                </div>
+                <label>Novo e-mail: </label>
+                <input type="email" name="email" placeholder="exemplo@controlinho.com" />
+                <div id="div_senha">
+                    <div class="controls">
+                        <label>Senha atual: </label>
+                        <input onchange="checaSenha(this.value);" type="password" id="senha"/>
+                        <span id="span_senha" style="display: none;" class="help-inline">
+                        A senha não corresponde!</span>
+                    </div>
+                </div>
+                <label>Nova senha: </label>
+                <input type="password" name="senha" /><br><br>
+                <input id="submit" type="submit" name="salvar" value="Enviar" class="btn-success btn-large" />
+                <input type="reset" name="salvar" value="Limpar" class="btn-normal btn-large" />
+            </form>
+        </div>
+        <div id="editar_postagens" class="span9 hero-unit">
+            <label><h3>Editar Postagens</h3></label>
+        </div>
+    </div>
+</div>
+<?php } ?>
+ <footer class="lala">
+        <div class="center">
+          <p>Um oferecimento de Controlinho</p>
+          <p>&copy; 2015 - Felippe, Gabriel e Iuri</p>
+        </div>
+      </footer>
+
+    <script src="../assets/js/bootstrap.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+
+  </body>
+  <script>
+    var ep = document.getElementById('editar_postagens');
+    var epr = document.getElementById('editar_perfil');
+    ep.style.display = 'none';
+    
+    var sessao = new Array();
+    
+    sessao = <?php echo json_encode($sessao); ?>;
+    
+    function checaEmail(value){
+        if(sessao.email !== value){
+            document.getElementById('submit').disabled = true;
+            document.getElementById('div_email').className = 'control-group error';
+            document.getElementById('span_email').style.display = 'inline-block';
+        }else{
+            document.getElementById('submit').disabled = false;
+            document.getElementById('div_email').className = '';
+            document.getElementById('span_email').style.display = 'none';
+        }
+    }
+    
+    function checaSenha(value){
+        if(sessao.senha !== value){
+            document.getElementById('submit').disabled = true;
+            document.getElementById('div_senha').className = 'control-group error';
+            document.getElementById('span_senha').style.display = 'inline-block';
+        }else{
+            document.getElementById('submit').disabled = false;
+            document.getElementById('div_senha').className = '';
+            document.getElementById('span_senha').style.display = 'none';
+        }
+    }
+          
+    function mostraPostagens(){
+        epr.style.display = 'none';
+        ep.style.display = 'inline-block';
+    }
+    function mostraPerfil(){
+            ep.style.display = 'none';
+            epr.style.display = 'inline-block';
+    }
+    
+    function mudaImagen(value){
+        var aa = document.getElementById('mudar_avatar');
+        aa.src = '"'+value+'"';
+    }
+  </script>
+</html>

@@ -6279,3 +6279,7 @@ a.btn{
         margin-bottom: 15px;
         padding: 7px 9px;
       }
+#div_avatar img {
+    max-height: 230px;
+    max-width: 230px;
+}

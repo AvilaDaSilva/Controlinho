@@ -1,20 +1,7 @@
-<script>
-    function AbrirLogin(){
-        var login = document.getElementById('modal-login').style.display;
-        if(login == 'none'){
-            document.getElementById('modal-login').style.display = 'block';
-        }else{
-            document.getElementById('modal-login').style.display = 'none';
-        }
-    }
-    function Cancel(){
-        location.href="/";
-    }
-</script>
 <?php
-session_start();
-
-$_SESSION['id'] = 1;
+    if(!isset($_SESSION)){
+    session_start();
+    }
 ?>
 <!DOCTYPE HTML>
 <html lang="en">
@@ -38,25 +25,39 @@ $_SESSION['id'] = 1;
 </head>
 
 <body>
-<!-- MODAL DE LOGIN -->
-<div id="modal-login" class="modal" style="display: none">
-    <div class="modal-header">
-        <span>Login: </span>
-        <a href="" class="close" >X</a>
-    </div>
-    <div class="modal-body">
-        <form action="/usuarios/login" method="POST">
-            <label class="modal-label">E-mail: </label>
-            <input type="text" name="email-login" placeholder="Digite seu E-mail aqui!" />
-            <label class="modal-label">Senha: </label>
-            <input type="password" name="senha-login" />
-            <a href="/usuarios/retrieve">Esqueceu a senha?</a><br>
-            <a href="/usuarios/save">Quer fazer um novo cadastro?</a><br><br>
-            <button class="btn-success" type="submit">Entrar</button>
-
-        </form>
-    </div>
+<!-- MODAL DE SESSAO -->
+<?php if(isset($_SESSION['username'])){ ?>
+<div id="modal-login" class="modal">
+        <div class="modal-header">
+            <span><?php echo $_SESSION['username']; ?>: </span>
+            <a href="#close" class="close" >X</a>
+        </div>
+        <div class="modal-body">
+                <h3>Oque deseja fazer?</h3>
+                <a href="/usuarios/index">Configuraçõs de usuário.</a><br>
+                <a href="/usuarios/logout">Sair.</a>
+        </div>
 </div>
+<?php }else{ ?>
+<div id="modal-login" class="modal">
+        <div class="modal-header">
+            <span>Login: </span>
+            <a href="#close" class="close" >X</a>
+        </div>
+        <div class="modal-body">
+            <form action="/usuarios/retrieve" method="POST">
+                <label class="modal-label">E-mail: </label>
+                <input type="text" name="email" placeholder="Digite seu E-mail aqui!" />
+                <label class="modal-label">Senha: </label>
+                <input type="password" name="senha" />
+                <a href="/usuarios/retrieve">Esqueceu a senha?</a><br>
+                <a href="/usuarios/save">Quer fazer um novo cadastro?</a><br><br>
+                <button class="btn-success" type="submit">Entrar</button>
+                
+            </form>
+        </div>
+</div>
+<?php } ?>
 <!-- MENU SUPERIOR -->
 <div class="navbar">
     <img src="/images/cabecalho.png">
@@ -65,7 +66,7 @@ $_SESSION['id'] = 1;
             <a class="btn-first" href="/"><img src="/images/buttons/botao_home.png"></a>
             <a class="btn-normal" href="/about/index"><img src="/images/buttons/botao_about.png"></a>
             <a class="btn-normal" href="http://clickjogos.com.br"><img src="/images/buttons/botao_arcade.png"></a>
-            <a class="btn-login" href="#" onclick="AbrirLogin()"><img src="/images/buttons/botao_login.png"></a>
+            <a class="btn-login" href="#modal-login"><img src="/images/buttons/botao_login.png"></a>
         </div>
     </div>
 </div>
@@ -75,7 +76,11 @@ $_SESSION['id'] = 1;
         <div class="span3">
             <div class="well sidebar-nav">
                 <?php if(isset($_SESSION)){ ?>
-                    <img src="/images/<?=$_SESSION['avatar']?>">
+                    <?php if(!isset($_SESSION['avatar'])){ ?>
+                    <img src="/images/avatar.jpg">
+                    <?php }else{ ?>
+                    <img src="/images/user-avatar/<?=$_SESSION['avatar']?>">
+                    <?php } ?>
                     <br>
                     <h4><?= $_SESSION['username']?></h4>
                 <?php } else { ?>
