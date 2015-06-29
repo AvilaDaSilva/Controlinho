@@ -47,9 +47,28 @@ class PostgresAdapter implements AdapterInterface
     {
         $sql = "INSERT INTO posts (titulo, corpo, usuario, data_post) VALUES ('".$values['titulo']."', '".$values['corpo']."', '".$values['usuario']."', '".$values['dataPost']."')";
         $stmp = $this->db_adapter->prepare($sql);
+        $stmp->execute();
         $sql = "SELECT id FROM posts WHERE titulo = '".$values['titulo']."'";
-        $id = $this->db_adapter->prepare($sql);
-        $sql = "INSERT INTO anexos (src, media, post) VALUES ('".$values['tipoMidia']."', '$file', $id)";
+        $stmp = $this->db_adapter->prepare($sql);
+        $stmp->execute();
+        $id = $stmp->fetchAll();
+        $sql = "INSERT INTO anexos (src, media, post) VALUES ('".$values['tipoMidia']."', '$file', ".$id[0]['id'].")";
+        $stmp = $this->db_adapter->prepare($sql);
+        $stmp->execute();
+
+        return true;
+    }
+
+    public function updatePost($values, $file)
+    {
+        $sql = "UPDATE posts SET (titulo, corpo, usuario, data_post) VALUES ('".$values['titulo']."', '".$values['corpo']."', '".$values['usuario']."', '".$values['dataPost']."')";
+        $stmp = $this->db_adapter->prepare($sql);
+        $stmp->execute();
+        $sql = "SELECT id FROM posts WHERE titulo = '".$values['titulo']."'";
+        $stmp = $this->db_adapter->prepare($sql);
+        $stmp->execute();
+        $id = $stmp->fetchAll();
+        $sql = "UPDATE anexos (src, media, post) VALUES ('".$values['tipoMidia']."', '$file', ".$id[0]['id'].")";
         $stmp = $this->db_adapter->prepare($sql);
         $stmp->execute();
 
@@ -73,6 +92,13 @@ class PostgresAdapter implements AdapterInterface
     public function fetchAllPosts()
     {
         $stmp = $this->db_adapter->prepare("SELECT posts.id, posts.titulo, posts.corpo, usuario.status, usuario.nome, anexos.src, anexos.media FROM posts JOIN usuario ON (posts.usuario = usuario.id) JOIN anexos ON (anexos.post = posts.id)");
+        $stmp->execute();
+        return $stmp->fetchAll();
+    }
+
+    public function fetchAllPostsById($id)
+    {
+        $stmp = $this->db_adapter->prepare("SELECT posts.id, posts.titulo, posts.corpo, usuario.status, usuario.nome, anexos.src, anexos.media FROM posts JOIN usuario ON (posts.usuario = usuario.id) JOIN anexos ON (anexos.post = posts.id) WHERE posts.id = $id");
         $stmp->execute();
         return $stmp->fetchAll();
     }
