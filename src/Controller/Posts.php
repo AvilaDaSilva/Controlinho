@@ -10,8 +10,11 @@ class Posts
 {
     public function saveAction()
     {
+
         if($_POST)
         {
+            var_dump($_POST);
+            var_dump($_FILES);exit;
 
         }
         else
