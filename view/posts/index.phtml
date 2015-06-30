@@ -79,16 +79,16 @@
                     <img src="/images/user-avatar/<?php echo $_SESSION['avatar'] ?>">
                     <br>
                     <h4><?php echo $_SESSION['username']?></h4>
+                    <br>
+                    <br>
+                    <form action="/save" method="POST">
+                        <button type="submit" class="btn btn-primary">Criar post</button>
+                    </form>
                 <?php } else { ?>
                     <img src="/images/avatar.jpg">
                     <br>
                     <h4>Visitante</h4>
                 <?php } ?>
-                <br>
-                <br>
-                <form action="/save" method="POST">
-                    <button type="submit" class="btn btn-primary">Criar post</button>
-                </form>
             </div>
         </div>
         <div class="span9">
@@ -96,14 +96,23 @@
                 if ($content['status'] == '1') {
                     ?>
                     <div class="hero-unit">
-                        <form action="/delete" method="POST">
-                            <input type="hidden" name="id" value="<?php echo $content['id'] ?>">
-                            <input type="submit" class="icon-remove icons" value="" >
-                        </form>
-                        <form action="/save" method="POST">
-                            <input type="hidden" name="id" value="<?php echo $content['id'] ?>">
-                            <input type="submit" class="icon-pencil icons" value="" >
-                        </form>
+                        <?php if(isset($_SESSION)){
+
+                        } elseif($_SESSION['status'] == 1 && $_SESSION['userid'] == $content['id']){ ?>
+                            <form action="/save" method="POST">
+                                <input type="hidden" name="id" value="<?php echo $content['id'] ?>">
+                                <input type="submit" class="icon-pencil icons" value="" >
+                            </form>
+                        <?php } else { ?>
+                            <form action="/delete" method="POST">
+                                <input type="hidden" name="id" value="<?php echo $content['id'] ?>">
+                                <input type="submit" class="icon-remove icons" value="" >
+                            </form>
+                            <form action="/save" method="POST">
+                                <input type="hidden" name="id" value="<?php echo $content['id'] ?>">
+                                <input type="submit" class="icon-pencil icons" value="" >
+                            </form>
+                        <?php } ?>
                         <div class="popover-title">
                             <h3><strong><?php echo $content['titulo']; ?></strong></h3>
                             <h5>Postado por: <?php echo $content['nome']?></h5>
