@@ -65,13 +65,18 @@
         <div class="modal-body">
             <form action="/usuarios/retrieve" method="POST">
                 <label class="modal-label">E-mail: </label>
-                <input type="text" name="email" placeholder="Digite seu E-mail aqui!" />
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-envelope"></i></span>
+                    <input type="text" name="email" placeholder="Digite seu E-mail aqui!" />
+                </div>
                 <label class="modal-label">Senha: </label>
-                <input type="password" name="senha" />
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-lock"></i></span>
+                    <input type="password" name="senha" />
+                </div>
                 <a href="/usuarios/retrieve">Esqueceu a senha?</a><br>
                 <a href="/usuarios/save">Quer fazer um novo cadastro?</a><br><br>
                 <button class="btn-success" type="submit">Entrar</button>
-                
             </form>
         </div>
 </div>
