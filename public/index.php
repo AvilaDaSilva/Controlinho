@@ -49,6 +49,14 @@ else if($uri == '/')
 {
     $posts->homeAction();
 }
+else if($uri == '/comentario')
+{
+    $posts->comentarioAction();
+}
+else if($uri == '/about')
+{
+    $posts->aboutAction();
+}
 else
 {
     header('Status: 404 Not Found');
