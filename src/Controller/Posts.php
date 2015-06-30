@@ -60,7 +60,11 @@ class Posts
         $id = $_POST['id'];
         if(isset($_POST['comentario'])){
             $values['comentario'] = $_POST['comentario'];
-            $values['usuario'] = 1;
+            if(isset($_SESSION['username'])){
+                $values['usuario'] = 0;
+            } else {
+                $values['usuario'] = $_SESSION['id'];
+            }
             $values['data'] = date('Y-m-d');
             $values['post'] = $_POST['id'];
             $return = $adapter->insertComentario($values);
