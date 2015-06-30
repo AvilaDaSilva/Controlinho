@@ -1,7 +1,7 @@
 <?php
-    if(!isset($_SESSION)){
+if(!isset($_SESSION)){
     session_start();
-    }
+}
 ?>
 <!DOCTYPE HTML>
 <html lang="en">
@@ -27,19 +27,19 @@
 <body>
 <!-- MODAL DE SESSAO -->
 <?php if(isset($_SESSION['username'])){ ?>
-<div id="modal-login" class="modal">
+    <div id="modal-login" class="modal">
         <div class="modal-header">
             <span><?php echo $_SESSION['username']; ?>: </span>
             <a href="#close" class="close" >X</a>
         </div>
         <div class="modal-body">
-                <h3>Oque deseja fazer?</h3>
-                <a href="/usuarios/index">Configuraçõs de usuário.</a><br>
-                <a href="/usuarios/logout">Sair.</a>
+            <h3>Oque deseja fazer?</h3>
+            <a href="/usuarios/index">Configuraçõs de usuário.</a><br>
+            <a href="/usuarios/logout">Sair.</a>
         </div>
-</div>
+    </div>
 <?php }else{ ?>
-<div id="modal-login" class="modal">
+    <div id="modal-login" class="modal">
         <div class="modal-header">
             <span>Login: </span>
             <a href="#close" class="close" >X</a>
@@ -53,10 +53,10 @@
                 <a href="/usuarios/retrieve">Esqueceu a senha?</a><br>
                 <a href="/usuarios/save">Quer fazer um novo cadastro?</a><br><br>
                 <button class="btn-success" type="submit">Entrar</button>
-                
+
             </form>
         </div>
-</div>
+    </div>
 <?php } ?>
 <!-- MENU SUPERIOR -->
 <div class="navbar">
@@ -77,9 +77,9 @@
             <div class="well sidebar-nav">
                 <?php if(isset($_SESSION)){ ?>
                     <?php if(!isset($_SESSION['avatar'])){ ?>
-                    <img src="/images/avatar.jpg">
+                        <img src="/images/avatar.jpg">
                     <?php }else{ ?>
-                    <img src="/images/user-avatar/<?=$_SESSION['avatar']?>">
+                        <img src="/images/user-avatar/<?=$_SESSION['avatar']?>">
                     <?php } ?>
                     <br>
                     <h4><?= $_SESSION['username']?></h4>
@@ -91,65 +91,59 @@
             </div>
         </div>
         <div class="span9">
-            <div class="hero-unit">
-                <div class="popover-title">
-                    <h3>Criando novo post...</h3>
-                </div>
-                <br>
-                <?php if(isset($this->content)){ ?>
-                    <form action="/save" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="id" value="<?php echo $this->content[0]['id'] ?>">
-                        <span>Titulo</span><i class="icon-arrow-down icons"></i>
-                        <input value="<?php echo $this->content[0]['titulo'] ?>" class="input-block-level" type="text" name="titulo" placeholder="Insira um titulo para seu post">
-                        <br><br>
-                        <span>Corpo</span><i class="icon-arrow-down icons"></i>
-                        <textarea class="input-block-level" rows="3" name="corpo" placeholder="Escreva aqui seu post"><?php echo $this->content[0]['corpo'] ?></textarea>
+            <?php foreach($this->post as $content) {
+                if ($content['status'] == '1') {
+                    ?>
+                    <div class="hero-unit">
+                        <div class="popover-title">
+                            <h3>Comentando o post do amiguinho...</h3>
+                        </div>
                         <br>
-                        <span>Tipo de Midia</span><i class="icon-arrow-down icons"></i><br>
-                        <select value="<?php echo $this->content[0]['src'] ?>" class="span2" name="tipoMidia">
-                            <?php if($this->content[0]['src'] == 'video' ){ ?>
-                                <option value="">--------</option>
-                                <option value="video" selected>Vídeo</option>
-                                <option value="img">Imagem</option>
-                            <?php } else { ?>
-                                <option value="">--------</option>
-                                <option value="video">Vídeo</option>
-                                <option value="img" selected>Imagem</option>
+                        <div class="popover-title">
+                            <h3><strong><?php echo $content['titulo']; ?></strong></h3>
+                            <h5>Postado por: <?php echo $content['nome']?></h5>
+                        </div>
+                        <hr>
+                        <div class="popover-content">
+                            <?php if (isset($content['media']) && isset($content['src'])) { ?>
+
+                                <?php if ($content['src'] == 'img') { ?>
+                                    <img style="height: 320px;" src="images/user-image/<?php echo $content['media'] ?>">
+                                <?php } ?>
+                                <?php if ($content['src'] == 'video') { ?>
+                                    <iframe src="images/user-image/<?php echo $content['media'] ?>"></iframe>
+                                <?php } ?>
+
                             <?php } ?>
-                        </select>
-                        <br><br>
-                        <span>Midia</span><i class="icon-arrow-down icons"></i><br>
-                        <input value="<?php echo $this->content[0]['media'] ?>" type="file" name="midia">
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-success">Salvar Post</button>
-                            <button onclick="Cancel();" type="button" class="btn">Cancelar</button>
                         </div>
-                    </form>
-                <?php } else {?>
-                    <form action="/save" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="id">
-                        <span>Titulo</span><i class="icon-arrow-down icons"></i>
-                        <input class="input-block-level" type="text" name="titulo" placeholder="Insira um titulo para seu post">
-                        <br><br>
-                        <span>Corpo</span><i class="icon-arrow-down icons"></i>
-                        <textarea class="input-block-level" rows="3" name="corpo" placeholder="Escreva aqui seu post"></textarea>
+                        <div class="popover-content center">
+                            <?php $texto = explode(chr(10), $content['corpo']);
+                            foreach ($texto as $paragrafo) {
+                                ?>
+                                <p><?php echo $paragrafo ?></p>
+                            <?php } ?>
+                        </div>
+                        <?php foreach($this->comentario as $coment){?>
+                            <div class="popover-title">
+                                <div class="row">
+                                    <div style="margin-left: 30px;" class="span3"><h5><?php echo $coment['nome'] ?></h5></div>
+                                    <div class="span6 popover-title"><p><?php echo $coment['comentario'] ?></p></div>
+                                </div>
+                            </div>
+                        <?php } ?>
                         <br>
-                        <span>Tipo de Midia</span><i class="icon-arrow-down icons"></i><br>
-                        <select class="span2" name="tipoMidia">
-                            <option value="">--------</option>
-                            <option value="video">Vídeo</option>
-                            <option value="img">Imagem</option>
-                        </select>
-                        <br><br>
-                        <span>Midia</span><i class="icon-arrow-down icons"></i><br>
-                        <input type="file" name="midia">
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-success">Salvar Post</button>
-                            <button onclick="Cancel();" type="button" class="btn">Cancelar</button>
-                        </div>
-                    </form>
-                <?php } ?>
-            </div>
+                        <form action="/comentario" method="POST">
+                            <input type="hidden" name="id" value="<?php echo $content['id'] ?>">
+                            <textarea class="input-block-level" rows="3" name="comentario" placeholder="Escreva aqui seu comentario"></textarea>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-success">Comentar</button>
+                                <button onclick="Cancel();" type="button" class="btn">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+
+                <?php }
+            }?>
         </div>
     </div>
 
@@ -161,11 +155,6 @@
     </footer>
 
 </div>
-<script>
-    function Cancel(){
-        location.href="/";
-    }
-</script>
 <script src="../assets/js/bootstrap.js"></script>
 <script src="../assets/js/bootstrap.min.js"></script>
 <script src="../assets/js/jquery.js"></script>
@@ -181,5 +170,10 @@
 <script src="../assets/js/bootstrap-collapse.js"></script>
 <script src="../assets/js/bootstrap-carousel.js"></script>
 <script src="../assets/js/bootstrap-typeahead.js"></script>
+<script>
+    function Cancel(){
+        location.href="/";
+    }
+</script>
 </body>
 </html>
