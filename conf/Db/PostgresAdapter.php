@@ -59,6 +59,13 @@ class PostgresAdapter implements AdapterInterface
         return true;
     }
 
+    public function insertComentario($values)
+    {
+        $stmp = "INSERT INTO comentarios (comentario, usuario, data_comentario, post) VALUES ('".$values['comentario']."', ".$values['usuario'].", '".$values['data']."', ".$values['post'].")";
+        $stmp = $this->db_adapter->prepare($stmp);
+        $stmp->execute();
+    }
+
     public function updatePost($id, $posts, $anexos)
     {
         $sql = "UPDATE posts SET $posts WHERE id = $id";
@@ -85,13 +92,23 @@ class PostgresAdapter implements AdapterInterface
 		return $stmp->fetchAll();
 	}
 
+    public function fetchAllComentario()
+    {
+        $stmp = $this->db_adapter->prepare("SELECT comentarios.post, comentarios.comentario, usuario.nome FROM comentarios JOIN usuario ON (usuario.id = comentarios.usuario)");
+        $stmp->execute();
+        return $stmp->fetchAll();
+    }
+
     public function fetchAllPosts()
     {
-        $stmp = $this->db_adapter
-            ->prepare("SELECT posts.id, posts.titulo, posts.corpo, usuario.status,"
-                . " usuario.nome, anexos.src, anexos.media"
-                . " FROM posts JOIN usuario ON (posts.usuario = usuario.id) "
-                . "JOIN anexos ON (anexos.post = posts.id)");
+        $stmp = $this->db_adapter->prepare("SELECT posts.id, posts.titulo, posts.corpo, usuario.status, usuario.nome, anexos.src, anexos.media FROM posts JOIN usuario ON (posts.usuario = usuario.id) JOIN anexos ON (anexos.post = posts.id)");
+        $stmp->execute();
+        return $stmp->fetchAll();
+    }
+
+    public function fetchAllComentarioById($id)
+    {
+        $stmp = $this->db_adapter->prepare("SELECT comentarios.comentario, usuario.nome FROM comentarios JOIN usuario ON (usuario.id = comentarios.usuario) WHERE comentarios.post = $id");
         $stmp->execute();
         return $stmp->fetchAll();
     }
