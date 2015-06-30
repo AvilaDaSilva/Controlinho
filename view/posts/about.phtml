@@ -70,84 +70,36 @@ if(!isset($_SESSION)){
         </div>
     </div>
 </div>
-<!-- SIDEBAR -->
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span3">
-            <div class="well sidebar-nav">
-                <?php if(isset($_SESSION['username'])){ ?>
-                    <img src="/images/user-avatar/<?php echo $_SESSION['avatar'] ?>">
-                    <br>
-                    <h4><?php echo $_SESSION['username']?></h4>
-                <?php } else { ?>
-                    <img src="/images/avatar.jpg">
-                    <br>
-                    <h4>Visitante</h4>
-                <?php } ?>
-                <br>
-                <br>
-                <form action="/save" method="POST">
-                    <button type="submit" class="btn btn-primary">Criar post</button>
-                </form>
-            </div>
+<div class="container">
+    <div class="hero-unit">
+        <h2 class="center">Um pouco dos criadores...</h2>
+        <br>
+        <p class="center">Veja a seguir um poco sobre os criadores do blog Controlinho</p>
+    </div>
+    <div class="row">
+        <div class="span4 popover-title">
+            <h3>Felippe Ribeiro dos Santos</h3>
+            <img class="img-circle" src="images/user-avatar/santos.jpg"><br><br>
+            <p>Jovem garoto de 19 anos de idade, também conhecido como o cara do sobrenome complicado, ou pra quem tenta falar Subiski. Atualmente trabalha na empresa DimoTech soluções em software ltda. no cargo de programador web, a algo em torno de 1 ano na função. O mesmo juntamente com seus amigos teve a ideia do Controlinho a pouco tempo, e com esforço lança hoje (30/02/2015) o blog Controlinho na sua versão Alfa.</p>
+            <br><br>
+            <p class="center"><a target="_blank" class="btn btn-primary" href="https://www.facebook.com/felippe.omgt"><i class="icon-thumbs-up"></i> View details &raquo;</a></p>
         </div>
-        <div class="span9">
-            <?php foreach($this->post as $content) {
-                if ($content['status'] == '1') {
-                    ?>
-                    <div class="hero-unit">
-                        <div class="popover-title">
-                            <h3>Comentando o post do amiguinho...</h3>
-                        </div>
-                        <br>
-                        <div class="popover-title">
-                            <h3><strong><?php echo $content['titulo']; ?></strong></h3>
-                            <h5>Postado por: <?php echo $content['nome']?></h5>
-                        </div>
-                        <hr>
-                        <div class="popover-content">
-                            <?php if (isset($content['media']) && isset($content['src'])) { ?>
-
-                                <?php if ($content['src'] == 'img') { ?>
-                                    <img style="height: 320px;" src="images/user-image/<?php echo $content['media'] ?>">
-                                <?php } ?>
-                                <?php if ($content['src'] == 'video') { ?>
-                                    <iframe src="images/user-image/<?php echo $content['media'] ?>"></iframe>
-                                <?php } ?>
-
-                            <?php } ?>
-                        </div>
-                        <div class="popover-content center">
-                            <?php $texto = explode(chr(10), $content['corpo']);
-                            foreach ($texto as $paragrafo) {
-                                ?>
-                                <p><?php echo $paragrafo ?></p>
-                            <?php } ?>
-                        </div>
-                        <?php foreach($this->comentario as $coment){?>
-                            <div class="popover-title">
-                                <div class="row">
-                                    <div style="margin-left: 30px;" class="span3"><h5><?php echo $coment['nome'] ?></h5></div>
-                                    <div class="span6 popover-title"><p><?php echo $coment['comentario'] ?></p></div>
-                                </div>
-                            </div>
-                        <?php } ?>
-                        <br>
-                        <form action="/comentario" method="POST">
-                            <input type="hidden" name="id" value="<?php echo $content['id'] ?>">
-                            <textarea class="input-block-level" rows="3" name="comentario" placeholder="Escreva aqui seu comentario"></textarea>
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-success">Comentar</button>
-                                <button onclick="Cancel();" type="button" class="btn">Cancelar</button>
-                            </div>
-                        </form>
-                    </div>
-
-                <?php }
-            }?>
+        <div class="span4 popover-title">
+            <h3>Gabriel Avila da Silva</h3>
+            <img class="img-circle" src="images/user-avatar/avila.jpg"><br><br>
+            <p>Jovem garoto de 19 anos de idade, também conhecido como o Terceiro melhor do melhor do mundo em bocha (que na verdade é bolão e não bocha), BochaMan ou bochero ou simplesmente Avila. Atualmente trabalha na empresa DimoTech soluções em software ltda. no cargo de programador web, a algo em torno de 4 meses na função. O mesmo juntamente com seus amigos teve a ideia do Controlinho a pouco tempo, e com esforço lança hoje (30/02/2015) o blog Controlinho na sua versão Alfa.</p>
+            <br>
+            <p class="center"><a target="_blank" class="btn btn-primary" href="https://www.facebook.com/gabriel.avila.9849"><i class="icon-thumbs-up"></i> View details &raquo;</a></p>
+        </div>
+        <div class="span4 popover-title">
+            <h3>Iuri Leonardo Bruski</h3>
+            <img class="img-circle" src="images/user-avatar/bruski.jpg"><br><br>
+            <p>Jovem garoto de 18 anos de idade, também conhecido como o cara que não tem apelido nem nada. Atualmente trabalha na empresa CRS Centro de Residência em Software no cargo de programador web, a algo em torno de 4 meses na função. O mesmo juntamente com seus amigos teve a ideia do Controlinho a pouco tempo, e com esforço lança hoje (30/02/2015) o blog Controlinho na sua versão Alfa.</p>
+            <br><br><br>
+            <p class="center"><a target="_blank" class="btn btn-primary" href="https://www.facebook.com/iurileonardo.bruski?fref=ufi"><i class="icon-thumbs-up"></i> View details &raquo;</a></p>
         </div>
     </div>
-
+</div>
     <footer class="lala">
         <div class="center">
             <p>Um oferecimento de Controlinho</p>

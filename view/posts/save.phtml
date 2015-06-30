@@ -64,7 +64,7 @@
     <div class="navbar-inner">
         <div class="container-fluid">
             <a class="btn-first" href="/"><img src="/images/buttons/botao_home.png"></a>
-            <a class="btn-normal" href="/about/index"><img src="/images/buttons/botao_about.png"></a>
+            <a class="btn-normal" href="/about"><img src="/images/buttons/botao_about.png"></a>
             <a class="btn-normal" href="http://clickjogos.com.br"><img src="/images/buttons/botao_arcade.png"></a>
             <a class="btn-login" href="#modal-login"><img src="/images/buttons/botao_login.png"></a>
         </div>
@@ -75,19 +75,20 @@
     <div class="row-fluid">
         <div class="span3">
             <div class="well sidebar-nav">
-                <?php if(isset($_SESSION)){ ?>
-                    <?php if(!isset($_SESSION['avatar'])){ ?>
-                    <img src="/images/avatar.jpg">
-                    <?php }else{ ?>
-                    <img src="/images/user-avatar/<?=$_SESSION['avatar']?>">
-                    <?php } ?>
+                <?php if(isset($_SESSION['username'])){ ?>
+                    <img src="/images/user-avatar/<?php echo $_SESSION['avatar'] ?>">
                     <br>
-                    <h4><?= $_SESSION['username']?></h4>
+                    <h4><?php echo $_SESSION['username']?></h4>
                 <?php } else { ?>
                     <img src="/images/avatar.jpg">
                     <br>
                     <h4>Visitante</h4>
                 <?php } ?>
+                <br>
+                <br>
+                <form action="/save" method="POST">
+                    <button type="submit" class="btn btn-primary">Criar post</button>
+                </form>
             </div>
         </div>
         <div class="span9">
