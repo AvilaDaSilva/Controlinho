@@ -89,4 +89,8 @@ class Posts
         require '../view/posts/index.phtml';
     }
 
+    public function aboutAction()
+    {
+        require '../view/posts/about.phtml';
+    }
 }
