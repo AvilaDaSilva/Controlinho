@@ -84,16 +84,16 @@ if(!isset($_SESSION)){
                     <img src="/images/user-avatar/<?php echo $_SESSION['avatar'] ?>">
                     <br>
                     <h4><?php echo $_SESSION['username']?></h4>
+                    <br>
+                    <br>
+                    <form action="/save" method="POST">
+                        <button type="submit" class="btn btn-primary">Criar post</button>
+                    </form>
                 <?php } else { ?>
                     <img src="/images/avatar.jpg">
                     <br>
                     <h4>Visitante</h4>
                 <?php } ?>
-                <br>
-                <br>
-                <form action="/save" method="POST">
-                    <button type="submit" class="btn btn-primary">Criar post</button>
-                </form>
             </div>
         </div>
         <div class="span9">
