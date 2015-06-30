@@ -21,7 +21,7 @@ CREATE TABLE posts (
 CREATE TABLE anexos(
     id SERIAL,
     src CHARACTER VARYING(256),
-    media BYTEA,
+    media CHARACTER VARYING(256),
     post INTEGER,
     CONSTRAINT anexos_post FOREIGN KEY (post) REFERENCES posts (id)
 );
