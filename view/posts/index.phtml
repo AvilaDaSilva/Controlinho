@@ -25,6 +25,24 @@
 </head>
 
 <body>
+<!-- MENSAGENS DE SUCESSO -->
+<?php if(isset($GLOBALS['success_post'])){
+    echo '<div id="sucess-nome" class="alert alert-success">
+<a href="" class="close pull-right" >x</a>';
+    if($GLOBALS['success_auth'] == 'delete'){
+        echo '<h4>Post deletado com sucesso!</h4>';
+    }
+    if($GLOBALS['success_auth'] == 'edit'){
+        echo '<h4>Edição no post realizada com sucesso!</h4>';
+    }
+    if($GLOBALS['success_auth'] == 'creat'){
+        echo '<h4>Post criado com sucesso!</h4>';
+    }
+    if($GLOBALS['success_auth'] == 'coment'){
+        echo '<h4>Comentario realizado com sucesso!</h4>';
+    }
+    echo '</div>';
+} ?>
 <!-- MODAL DE SESSAO -->
 <?php if(isset($_SESSION['username'])){ ?>
 <div id="modal-login" class="modal">
