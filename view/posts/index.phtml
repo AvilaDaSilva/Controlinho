@@ -25,6 +25,18 @@
 </head>
 
 <body>
+<!-- MENSAGENS DE ERROR -->
+<?php if(isset($GLOBALS['sucess_email'])){
+    echo '<div id="sucess-nome" class="alert alert-error">
+<a href="" class="close pull-right" >x</a>';
+    if($GLOBALS['sucess_email'] == 'error'){
+        echo '<h4>Falha no envio do e-mail!</h4>';
+    }
+    if($GLOBALS['sucess_email'] == 'error_404'){
+        echo '<h4>E-mail não cadastrado!</h4>';
+    }
+    echo '</div>';
+} ?>
 <!-- MENSAGENS DE SUCESSO -->
 <?php if(isset($GLOBALS['success_post'])){
     echo '<div id="sucess-nome" class="alert alert-success">
@@ -41,6 +53,15 @@
     if($GLOBALS['success_auth'] == 'coment'){
         echo '<h4>Comentario realizado com sucesso!</h4>';
     }
+    if($GLOBALS['sucess_email'] == 'sucess'){
+        echo '<h4>E-mail enviado com sucesso, verifique a sua caixa de entrada!</h4>';
+    }
+    if($GLOBALS['succes'] == 'sucess'){
+        echo '<h4>Usuário excluido com sucesso!</h4>';
+    }
+    if($GLOBALS['succes'] == 'sucess_add'){
+        echo '<h4>Usuário cadastrado com sucesso!</h4>';
+    }
     echo '</div>';
 } ?>
 <!-- MODAL DE SESSAO -->
@@ -52,8 +73,13 @@
         </div>
         <div class="modal-body">
                 <h3>Oque deseja fazer?</h3>
-                <a href="/usuarios/index">Configuraçõs de usuário.</a><br>
+                <?php if($_SESSION['status'] == 2){ ?> 
+                <a href="/usuarios/admin">Configurações de administrador.</a><br>
                 <a href="/usuarios/logout">Sair.</a>
+                <?php }else{ ?>
+                <a href="/usuarios/index">Configurações de usuário.</a><br>
+                <a href="/usuarios/logout">Sair.</a>
+                <?php } ?>
         </div>
 </div>
 <?php }else{ ?>

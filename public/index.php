@@ -34,7 +34,18 @@ else if($uri == '/usuarios/logout')
 {
     $usuarios->logoutAction();
 }
-
+else if($uri == '/usuarios/admin')
+{
+    $usuarios->adminAction();
+}
+else if($uri == '/usuarios/ban')
+{
+    $usuarios->banAction();
+}
+else if($uri == '/usuarios/forgot')
+{
+    $usuarios->forgotAction();
+}
 
 /* POSTS */
 else if($uri == '/save')

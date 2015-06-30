@@ -3,7 +3,10 @@
     session_start();
     }      
     $sessao = $_SESSION;
-    $posts = $this->content;
+    if($this->content){
+    $posts = $this->content['post'];
+    $usuarios = $this->content['usuarios'];
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -111,6 +114,12 @@ echo '</div>';
 <?php if(isset($GLOBALS['succes'])){
     echo '<div id="sucess-nome" class="alert alert-success">
 <a href="" class="close pull-right" >x</a>';
+    if($GLOBALS['succes'] == 'unban_sucess'){
+        echo '<h4>Usuário desbanido com sucesso!</h4>';
+    }
+    if($GLOBALS['succes'] == 'ban_sucess'){
+        echo '<h4>Usuário banido com sucesso!</h4>';
+    }
     if($GLOBALS['succes'] == 'sucess'){
         echo '<h4>Dados alterados com sucesso!</h4>';
     }
@@ -130,6 +139,7 @@ echo '</div>';
                     <br>
                     <h4>Bem vindo(a) <?= $_SESSION['username']?></h4>
                     <a style="cursor: pointer;" onclick="mostraPerfil();">Editar Perfil</a><br>
+                    <a style="cursor: pointer;" onclick="mostraPerfis();">Gerenciar Usuários</a><br>
                     <a style="cursor: pointer;" onclick="mostraPostagens();">Editar Postagens</a><br>
                     <a style="cursor: pointer;" href="/usuarios/delete">Excluir Perfil</a><br>
             </div>
@@ -187,6 +197,26 @@ echo '</div>';
             </form>
             <?php }}?>
         </div>
+        <div id="editar_perfis" class="span9 hero-unit">
+            <label><h3>Gerenciar Usuários</h3></label>
+            <?php
+            if(isset($usuarios)){
+            foreach ($usuarios as $usuario){
+                if($usuario['status'] != 0){
+                ?>
+            <form id="FORM<?php echo $usuario['id'] ?>" action="/usuario/ban" method="POST">
+                <input type="hidden" name="ban" value="<?php echo $usuario['id'] ?>">
+                <?php echo $usuario['nome']; ?>
+                <a title="Banir o usuário" class="icon-remove" style="cursor: pointer;" id="submit" onclick="submit(<?php echo $usuario['id'] ?>);"></a>
+            </form>
+                <?php }else{ ?>
+            <form id="FORM<?php echo $usuario['id'] ?>" action="/usuario/ban" method="POST">
+                <input type="hidden" name="unban" value="<?php echo $usuario['id'] ?>">
+                <?php echo $usuario['nome']; ?>
+                <a title="De-banir o usuário" class="icon-remove" style="cursor: pointer;" id="submit" onclick="submit(<?php echo $usuario['id'] ?>);"></a>
+            </form>
+                <?php }}}?>
+        </div>
     </div>
 </div>
 <?php } ?>
@@ -204,6 +234,7 @@ echo '</div>';
   <script>
     var ep = document.getElementById('editar_postagens');
     var epr = document.getElementById('editar_perfil');
+    var eps = document.getElementById('editar_perfis');
     ep.style.display = 'none';
     
     var sessao = new Array();
@@ -237,10 +268,17 @@ echo '</div>';
     function mostraPostagens(){
         epr.style.display = 'none';
         ep.style.display = 'inline-block';
+        eps.style.display = 'none';
     }
     function mostraPerfil(){
             ep.style.display = 'none';
             epr.style.display = 'inline-block';
+            eps.style.display = 'none';
+    }
+    function mostraPerfis(){
+        ep.style.display = 'none';
+            epr.style.display = 'none';
+            eps.style.display = 'inline-block';
     }
     
     function mudaImagen(value){

@@ -34,8 +34,13 @@
         </div>
         <div class="modal-body">
                 <h3>Oque deseja fazer?</h3>
-                <a href="/usuarios/index">Configuraçõs de usuário.</a><br>
+                <?php if($_SESSION['status'] == 2){ ?> 
+                <a href="/usuarios/admin">Configurações de administrador.</a><br>
                 <a href="/usuarios/logout">Sair.</a>
+                <?php }else{ ?>
+                <a href="/usuarios/index">Configurações de usuário.</a><br>
+                <a href="/usuarios/logout">Sair.</a>
+                <?php } ?>
         </div>
 </div>
 <?php }else{ ?>
@@ -47,13 +52,18 @@
         <div class="modal-body">
             <form action="/usuarios/retrieve" method="POST">
                 <label class="modal-label">E-mail: </label>
-                <input type="text" name="email" placeholder="Digite seu E-mail aqui!" />
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-envelope"></i></span>
+                    <input type="text" name="email" placeholder="Digite seu E-mail aqui!" />
+                </div>
                 <label class="modal-label">Senha: </label>
-                <input type="password" name="senha" />
-                <a href="/usuarios/retrieve">Esqueceu a senha?</a><br>
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-lock"></i></span>
+                    <input type="password" name="senha" />
+                </div>
+                <a href="/usuarios/forgot">Esqueceu a senha?</a><br>
                 <a href="/usuarios/save">Quer fazer um novo cadastro?</a><br><br>
                 <button class="btn-success" type="submit">Entrar</button>
-                
             </form>
         </div>
 </div>

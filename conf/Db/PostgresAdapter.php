@@ -137,7 +137,6 @@ class PostgresAdapter implements AdapterInterface
 	public function delete($table, $id)
 	{
         $stmp = $this->db_adapter->prepare("DELETE FROM $table WHERE id = $id");
-        var_dump($stmp);exit;
         $stmp->execute();
         return true;
 	}
@@ -155,7 +154,6 @@ class PostgresAdapter implements AdapterInterface
     
     public function updateUsuario($values, $id)
 	{
-        
         if(isset($values['nome'])){
         $nome = $values['nome'];
         $sql = "UPDATE usuario SET nome = '$nome' WHERE id = $id";
@@ -176,10 +174,26 @@ class PostgresAdapter implements AdapterInterface
         }
         if(isset($values['avatar'])){
         $avatar = $values['avatar'];
-        $sql = "UPDATE usuario SET avatar = $avatar WHERE id = $id";
+        $sql = "UPDATE usuario SET avatar = '$avatar' WHERE id = $id";
         $stmp = $this->db_adapter->prepare($sql);
         $stmp->execute();
         }
+        return true;
+    }
+    
+    public function banUsuario($id)
+    {
+        $stmp = $this->db_adapter
+            ->prepare("UPDATE usuario SET status = 0 WHERE id = $id");
+        $stmp->execute();
+        return true;
+    }
+    
+    public function unbanUsuario($id)
+    {
+        $stmp = $this->db_adapter
+            ->prepare("UPDATE usuario SET status = 1 WHERE id = $id");
+        $stmp->execute();
         return true;
     }
 
