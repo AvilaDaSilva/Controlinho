@@ -101,7 +101,7 @@ class PostgresAdapter implements AdapterInterface
 
     public function fetchAllPosts()
     {
-        $stmp = $this->db_adapter->prepare("SELECT posts.id, posts.titulo, posts.corpo, usuario.status, usuario.nome, anexos.src, anexos.media FROM posts JOIN usuario ON (posts.usuario = usuario.id) JOIN anexos ON (anexos.post = posts.id)");
+        $stmp = $this->db_adapter->prepare("SELECT posts.id, posts.titulo, posts.corpo, usuario.status, usuario.id as userid, usuario.nome, anexos.src, anexos.media FROM posts JOIN usuario ON (posts.usuario = usuario.id) JOIN anexos ON (anexos.post = posts.id)");
         $stmp->execute();
         return $stmp->fetchAll();
     }
