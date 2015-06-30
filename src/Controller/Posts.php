@@ -33,20 +33,11 @@ class Posts
         }
         else if(!isset($_POST))
         {
-
             session_start();
             $adapter = new DbAdapter();
             $filename = $_FILES['midia']['name'];
             $file = $_FILES['midia']['tmp_name'];
             move_uploaded_file($file, "images/user-image/".$filename);
-
-            //var_dump($filename);exit;
-            //$file = fopen($_FILES['midia']['tmp_name'],'r');
-            //$file = fread($file,filesize($_FILES['midia']['tmp_name']));
-            //$file = addslashes($file);
-            //var_dump($file);
-            //$file = base64_encode($file);
-            //var_dump($file);exit;
 
             $values['titulo'] = $_POST['titulo'];
             $values['corpo'] = $_POST['corpo'];
@@ -62,9 +53,24 @@ class Posts
         }
     }
 
-    public function editarAction()
+    public function comentarioAction()
     {
+        session_start();
+        $adapter = new DbAdapter();
+        $id = $_POST['id'];
+        if(isset($_POST['comentario'])){
+            $values['comentario'] = $_POST['comentario'];
+            $values['usuario'] = 1;
+            $values['data'] = date('Y-m-d');
+            $values['post'] = $_POST['id'];
+            $return = $adapter->insertComentario($values);
+            return header("location: /#sucesso");
+        } else {
+            $this->post = $adapter->fetchAllPostsById($id);
+            $this->comentario = $adapter->fetchAllComentarioById($id);
+        }
 
+        require '../view/posts/comentario.phtml';
     }
 
     public function deleteAction()
@@ -78,8 +84,8 @@ class Posts
     public function homeAction()
     {
         $adapter = new DbAdapter();
-        $post = $adapter->fetchAllPosts();
-        $this->content = $post;
+        $this->content = $adapter->fetchAllPosts();
+        $this->comentario = $adapter->fetchAllComentario();
         require '../view/posts/index.phtml';
     }
 
