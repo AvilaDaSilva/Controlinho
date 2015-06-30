@@ -23,8 +23,8 @@ class Posts
                 }
 
                 $result = $adapter->updatePost($id, $posts, $anexos);
-
-                header('Location: /#success');
+                $GLOBALS['success_post'] = 'edit';
+                header('Location: /');
             } else {
                 $id = $_POST['id'];
                 $this->content = $adapter->fetchAllPostsById($id);
@@ -46,8 +46,8 @@ class Posts
             $values['usuario'] = $_SESSION['id'];
 
             $post = $adapter->insertPost($values, $filename);
-
-            header('Location: /#success');
+            $GLOBALS['success_post'] = 'creat';
+            header('Location: /');
         } else {
             require '../view/posts/save.phtml';
         }
@@ -68,7 +68,8 @@ class Posts
             $values['data'] = date('Y-m-d');
             $values['post'] = $_POST['id'];
             $return = $adapter->insertComentario($values);
-            return header("location: /#sucesso");
+            $GLOBALS['success_post'] = 'coment';
+            return header("location: /");
         } else {
             $this->post = $adapter->fetchAllPostsById($id);
             $this->comentario = $adapter->fetchAllComentarioById($id);
@@ -82,7 +83,8 @@ class Posts
         $adapter = new DbAdapter();
         $id = $_POST['id'];
         $post = $adapter->deletePost($id);
-        header('Location: /#success');
+        $GLOBALS['success_post'] = 'delete';
+        header('Location: /');
     }
 
     public function homeAction()
