@@ -3,9 +3,9 @@
     session_start();
     }      
     $sessao = $_SESSION;
-    if($this->content){
-    $posts = $this->content['post'];
-    $usuarios = $this->content['usuarios'];
+    if(isset($GLOBALS['content'])){
+    $posts = $GLOBALS['content']['post'];
+    $usuarios = $GLOBALS['content']['usuarios'];
     }
 ?>
 <!DOCTYPE html>
@@ -138,10 +138,20 @@ echo '</div>';
                 <?php } ?>
                     <br>
                     <h4>Bem vindo(a) <?= $_SESSION['username']?></h4>
-                    <a style="cursor: pointer;" onclick="mostraPerfil();">Editar Perfil</a><br>
-                    <a style="cursor: pointer;" onclick="mostraPerfis();">Gerenciar Usuários</a><br>
-                    <a style="cursor: pointer;" onclick="mostraPostagens();">Editar Postagens</a><br>
-                    <a style="cursor: pointer;" href="/usuarios/delete">Excluir Perfil</a><br>
+                    <ul class="nav nav-tabs nav-stacked">
+                        <li>
+                            <a style="cursor: pointer;" onclick="mostraPerfil();">Editar Perfil</a><br>
+                        </li>
+                        <li>
+                            <a style="cursor: pointer;" onclick="mostraPerfis();">Gerenciar Usuários</a><br>
+                        </li>
+                        <li>
+                            <a style="cursor: pointer;" onclick="mostraPostagens();">Editar Postagens</a><br>
+                        </li>
+                        <li>
+                            <a style="cursor: pointer;" onclick="confirma();">Excluir Perfil<i class="icon-trash pull-right"></i></a><br>
+                        </li>
+                    </ul>
             </div>
         </div>
         <div id="editar_perfil" class="span9 hero-unit">
@@ -187,35 +197,100 @@ echo '</div>';
         </div>
         <div id="editar_postagens" class="span9 hero-unit">
             <label><h3>Editar Postagens</h3></label>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td>Título</td>
+                        <td>Autor</td>
+                        <td>Data</td>
+                        <td>Ação</td>
+                    </tr>
+                </thead>
+                <tbody>
             <?php
             if(isset($posts)){
             foreach ($posts as $post){
                 ?>
+                <tr>
+                    <td>
+                        <?php echo $post['titulo']; ?>
+                    </td>
+                    <td>
+                        <?php 
+                            foreach ($usuarios as $usuario){
+                                if($usuario['id'] = $post['usuario']){
+                                    echo $usuario['nome'];
+                                }
+                            }
+                        ?>
+                    </td>
+                    <td>
+                        <?php echo $post['data_post']; ?>
+                    </td>
+                    <td>
+                    <form id="FORM<?php echo $post['id'] ?>" action="/save" method="POST">
+                        <input type="hidden" name="id" value="<?php echo $post['id'] ?>">
+                        <a style="cursor: pointer;" id="submit" onclick="submit(<?php echo $post['id'] ?>);"><i class="icon-pencil"></i></a>
+                    </form>
+                    </td>
+                </tr>
             <form id="FORM<?php echo $post['id'] ?>" action="/save" method="POST">
                 <input type="hidden" name="id" value="<?php echo $post['id'] ?>">
                 <a style="cursor: pointer;" id="submit" onclick="submit(<?php echo $post['id'] ?>);"><?php echo $post['titulo']; ?></a>
             </form>
-            <?php }}?>
+                    <?php }}?>
+            </tbody>
+            </table>
+            
         </div>
         <div id="editar_perfis" class="span9 hero-unit">
             <label><h3>Gerenciar Usuários</h3></label>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td>Usuário</td>
+                        <td>E-mail</td>
+                        <td>Ação</td>
+                    </tr>
+                </thead>
+                <tbody>
             <?php
             if(isset($usuarios)){
             foreach ($usuarios as $usuario){
                 if($usuario['status'] != 0){
                 ?>
-            <form id="FORM<?php echo $usuario['id'] ?>" action="/usuario/ban" method="POST">
-                <input type="hidden" name="ban" value="<?php echo $usuario['id'] ?>">
-                <?php echo $usuario['nome']; ?>
-                <a title="Banir o usuário" class="icon-remove" style="cursor: pointer;" id="submit" onclick="submit(<?php echo $usuario['id'] ?>);"></a>
-            </form>
-                <?php }else{ ?>
-            <form id="FORM<?php echo $usuario['id'] ?>" action="/usuario/ban" method="POST">
-                <input type="hidden" name="unban" value="<?php echo $usuario['id'] ?>">
-                <?php echo $usuario['nome']; ?>
-                <a title="De-banir o usuário" class="icon-remove" style="cursor: pointer;" id="submit" onclick="submit(<?php echo $usuario['id'] ?>);"></a>
-            </form>
+                <tr>
+                    <td>
+                        <?php echo $usuario['nome']; ?>
+                    </td>
+                    <td>
+                        <?php echo $usuario['email']; ?>
+                    </td>
+                    <td>
+                        <form id="FORM<?php echo $usuario['id'] ?>" action="/usuarios/ban" method="POST">
+                        <input type="hidden" name="ban" value="<?php echo $usuario['id'] ?>">
+                        <a title="Banir o usuário" class="icon-remove" style="cursor: pointer;" id="submit" onclick="submit(<?php echo $usuario['id'] ?>);"></a>
+                    </form>
+                    </td>
+                </tr>
+                    <?php }else{ ?>
+                <tr class="error">
+                    <td>
+                        <?php echo $usuario['nome']; ?>
+                    </td>
+                    <td>
+                        <?php echo $usuario['email']; ?>
+                    </td>
+                    <td>
+                        <form id="FORM<?php echo $usuario['id'] ?>" action="/usuarios/ban" method="POST">
+                    <input type="hidden" name="unban" value="<?php echo $usuario['id'] ?>">
+                    <a title="De-banir o usuário" class="icon-ok" style="cursor: pointer;" id="submit" onclick="submit(<?php echo $usuario['id'] ?>);"></a>
+                </form>
+                    </td>
+                </tr>
                 <?php }}}?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -288,6 +363,12 @@ echo '</div>';
     
     function submit(id){
         document.forms["FORM"+id].submit();
+    }
+    
+    function confirma(){
+    if (confirm("Tem certeza que deseja excluir sua conta?")) {  
+      location.href="/usuarios/delete";  
+    }
     }
   </script>
 </html>

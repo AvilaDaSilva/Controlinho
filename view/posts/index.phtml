@@ -36,6 +36,13 @@
         echo '<h4>E-mail não cadastrado!</h4>';
     }
     echo '</div>';
+    if(isset($GLOBALS['error_auth'])){
+    echo '<div id="sucess-nome" class="alert alert-error">';
+    if($GLOBALS['error_auth'] = 'usuario_inativo'){
+        echo '<h4>O usuário está banido, entre em contato com os administradores!</h4>';
+    }
+    echo '</div>';
+    }
 } ?>
 <!-- MENSAGENS DE SUCESSO -->
 <?php if(isset($GLOBALS['success_post'])){

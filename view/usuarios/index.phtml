@@ -3,7 +3,9 @@
     session_start();
     }      
     $sessao = $_SESSION;
-    $posts = $this->content;
+    if($GLOBALS['content']){
+    $posts = $GLOBALS['content'];
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -129,9 +131,17 @@ echo '</div>';
                 <?php } ?>
                     <br>
                     <h4>Bem vindo(a) <?= $_SESSION['username']?></h4>
-                    <a style="cursor: pointer;" onclick="mostraPerfil();">Editar Perfil</a><br>
-                    <a style="cursor: pointer;" onclick="mostraPostagens();">Editar Postagens</a><br>
-                    <a style="cursor: pointer;" href="/usuarios/delete">Excluir Perfil</a><br>
+                    <ul class="nav nav-tabs nav-stacked">
+                        <li>
+                            <a style="cursor: pointer;" onclick="mostraPerfil();">Editar Perfil</a><br>
+                        </li>
+                        <li>
+                            <a style="cursor: pointer;" onclick="mostraPostagens();">Editar Postagens</a><br>
+                        </li>
+                        <li>
+                            <a style="cursor: pointer;" onclick="confirma();">Excluir Perfil<i class="icon-trash pull-right"></i></a><br>
+                        </li>
+                    </ul>
             </div>
         </div>
         <div id="editar_perfil" class="span9 hero-unit">
@@ -177,15 +187,37 @@ echo '</div>';
         </div>
         <div id="editar_postagens" class="span9 hero-unit">
             <label><h3>Editar Postagens</h3></label>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td>Título</td>
+                        <td>Data</td>
+                        <td>Ação</td>
+                    </tr>
+                </thead>
+                <tbody>
             <?php
             if(isset($posts)){
             foreach ($posts as $post){
                 ?>
-            <form id="FORM<?php echo $post['id'] ?>" action="/save" method="POST">
+                <tr>
+                    <td>
+                        <?php echo $post['titulo']; ?>
+                    </td>
+                    <td>
+                        <?php echo $post['data_post'];?>
+                    </td>
+                    <td>
+                        <form id="FORM<?php echo $post['id'] ?>" action="/save" method="POST">
                 <input type="hidden" name="id" value="<?php echo $post['id'] ?>">
-                <a style="cursor: pointer;" id="submit" onclick="submit(<?php echo $post['id'] ?>);"><?php echo $post['titulo']; ?></a>
+                <a style="cursor: pointer;" id="submit" onclick="submit(<?php echo $post['id'] ?>);"><i class=" icon-pencil"></i></a>
             </form>
-            <?php }}?>
+                    </td>
+                </tr>
+            
+                    <?php }}?>
+            </tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -250,6 +282,12 @@ echo '</div>';
     
     function submit(id){
         document.forms["FORM"+id].submit();
+    }
+    
+    function confirma(){
+    if (confirm("Tem certeza que deseja excluir sua conta?")) {  
+      location.href="/usuarios/delete";  
+    }
     }
   </script>
 </html>

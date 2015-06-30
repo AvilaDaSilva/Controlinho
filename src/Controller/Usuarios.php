@@ -40,7 +40,7 @@ class Usuarios
                         return null;
                     }
                     
-                    if($logou['status'] != 1){
+                    if($logou['status'] == 0){
                         $GLOBALS['error_auth'] = 'usuario_inativo';
                         require '../view/posts/index.phtml';
                         return null;
@@ -199,9 +199,13 @@ class Usuarios
             }
             else 
             {
+                if(!isset($_SESSION)){
+                    session_start();
+                } 
+                $id = $_SESSION['id'];
                 $adapter = new DbAdapter();
-                $post = $adapter->fetchAllPosts();
-                $this->content = $post;
+                $post = $adapter->fetchAllPostsById($id);
+                $GLOBALS['content'] = $post;
                 require '../view/usuarios/index.phtml';   
             }
         }
@@ -297,7 +301,7 @@ class Usuarios
             $adapter = new DbAdapter();
             $content['usuarios'] = $adapter->fetchAll('usuario');
             $content['post'] = $adapter->fetchAllPosts();
-            $this->content = $content;
+            $GLOBALS['content'] = $content;
             require '../view/admin/index.phtml';
             }
         }
@@ -316,14 +320,14 @@ class Usuarios
                     foreach ($usuarios as $usuario){
                         if($usuario['id'] == $post['unban']){
                             try {
-                                $adapter->unbanUsuario($post['ban']);
+                                $adapter->unbanUsuario($post['unban']);
                                 $GLOBALS['succes'] = 'unban_sucess';
                             } catch (Exception $ex) {
                                 echo $ex;
                             }
                         }
                     }
-                }
+                }else{
                 foreach ($usuarios as $usuario){
                     if($usuario['id'] == $post['ban']){
                         try {
@@ -334,8 +338,9 @@ class Usuarios
                         }
                     }
                 }
+                }
             }
-            require '../view/admin/index.phtml';
+            header("Location: /usuarios/admin");
         }
         
         public function deleteAction()
